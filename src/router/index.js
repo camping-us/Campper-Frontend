@@ -21,30 +21,30 @@ const routes = [
         name: "boardlist",
         component: () => import(/* webpackChunkName: "board" */ "@/components/board/BoardList"),
       },
-    //   {
-    //     path: "write",
-    //     name: "boardwrite",
-    //     beforeEnter: onlyAuthUser,
-    //     component: () => import(/* webpackChunkName: "board" */ "@/components/board/BoardWrite"),
-    //   },
-    //   {
-    //     path: "view/:boardno",
-    //     name: "boardview",
-    //     beforeEnter: onlyAuthUser,
-    //     component: () => import(/* webpackChunkName: "board" */ "@/components/board/BoardView"),
-    //   },
-    //   {
-    //     path: "modify",
-    //     name: "boardmodify",
-    //     // beforeEnter: onlyAuthUser,
-    //     component: () => import(/* webpackChunkName: "board" */ "@/components/board/BoardModify"),
-    //   },
-    //   {
-    //     path: "delete/:boardno",
-    //     name: "boarddelete",
-    //     beforeEnter: onlyAuthUser,
-    //     component: () => import(/* webpackChunkName: "board" */ "@/components/board/BoardDelete"),
-    //   },
+      {
+        path: "write",
+        name: "boardwrite",
+        // beforeEnter: onlyAuthUser,
+        component: () => import(/* webpackChunkName: "board" */ "@/components/board/BoardWrite"),
+      },
+      {
+        path: "view/:boardno",
+        name: "boardview",
+        // beforeEnter: onlyAuthUser,
+        component: () => import(/* webpackChunkName: "board" */ "@/components/board/BoardView"),
+      },
+      {
+        path: "modify",
+        name: "boardmodify",
+        // beforeEnter: onlyAuthUser,
+        component: () => import(/* webpackChunkName: "board" */ "@/components/board/BoardModify"),
+      },
+      {
+        path: "delete/:boardno",
+        name: "boarddelete",
+        // beforeEnter: onlyAuthUser,
+        component: () => import(/* webpackChunkName: "board" */ "@/components/board/BoardDelete"),
+      },
     ],
   }
 ];
