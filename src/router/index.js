@@ -10,14 +10,43 @@ const routes = [
     name: "home",
     component: HomeView,
   },
-  // {
-  //   path: '/about',
-  //   name: 'about',
-  //   // route level code-splitting
-  //   // this generates a separate chunk (about.[hash].js) for this route
-  //   // which is lazy-loaded when the route is visited.
-  //   component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
-  // }
+  {
+    path: "/board",
+    name: "board",
+    component: () => import(/* webpackChunkName: "board" */ "@/views/BoardView"),
+    redirect: "/board/list",
+    children: [
+      {
+        path: "list",
+        name: "boardlist",
+        component: () => import(/* webpackChunkName: "board" */ "@/components/board/BoardList"),
+      },
+    //   {
+    //     path: "write",
+    //     name: "boardwrite",
+    //     beforeEnter: onlyAuthUser,
+    //     component: () => import(/* webpackChunkName: "board" */ "@/components/board/BoardWrite"),
+    //   },
+    //   {
+    //     path: "view/:boardno",
+    //     name: "boardview",
+    //     beforeEnter: onlyAuthUser,
+    //     component: () => import(/* webpackChunkName: "board" */ "@/components/board/BoardView"),
+    //   },
+    //   {
+    //     path: "modify",
+    //     name: "boardmodify",
+    //     // beforeEnter: onlyAuthUser,
+    //     component: () => import(/* webpackChunkName: "board" */ "@/components/board/BoardModify"),
+    //   },
+    //   {
+    //     path: "delete/:boardno",
+    //     name: "boarddelete",
+    //     beforeEnter: onlyAuthUser,
+    //     component: () => import(/* webpackChunkName: "board" */ "@/components/board/BoardDelete"),
+    //   },
+    ],
+  }
 ];
 
 const router = new VueRouter({

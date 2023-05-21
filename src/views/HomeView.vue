@@ -1,6 +1,5 @@
 <template>
-  <div class="home">
-    <b-container class="bv-example-row" max-width: 100%>
+  <b-container class="bv-example-row">
       <b-row>
         <b-col>
           <main-carousel></main-carousel>
@@ -10,7 +9,6 @@
         </b-col>
       </b-row>
     </b-container>
-  </div>
 </template>
 
 <script>

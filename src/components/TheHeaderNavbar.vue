@@ -58,7 +58,7 @@
               <em>캠시판</em>
             </template>
             <b-dropdown-item href="#"
-              ><router-link :to="{ name: '자유게시판' }" class="link"
+              ><router-link :to="{ name: 'board' }" class="link"
                 >자유게시판</router-link
               ></b-dropdown-item
             >
