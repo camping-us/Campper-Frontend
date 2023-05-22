@@ -2,8 +2,13 @@ import { apiInstance } from "./index.js";
 
 const api = apiInstance();
 
-async function login(user, success, fail) {
-  await api.post(`/user/login`, JSON.stringify(user)).then(success).catch(fail);
+async function signup(user, success, fail) {
+  await api.post(`/users`, JSON.stringify(user)).then(success).catch(fail);
 }
 
-export { login };
+async function getProfile(user, success, fail) {
+  api.defaults.headers.common["Authorization"] = `Bearer ${sessionStorage.getItem("accessToken")}`;
+  await api.get(`/users/profile`).then(success).catch(fail);
+}
+
+export { signup, getProfile };
