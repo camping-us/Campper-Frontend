@@ -1,6 +1,6 @@
 import jwtDecode from "jwt-decode";
 // import router from "@/router";
-import { login, logout } from "@/api/auth";
+import { login } from "@/api/auth";
 import { getProfile } from "@/api/member";
 // findById, tokenRegeneration, logout
 
@@ -43,7 +43,11 @@ const memberStore = {
           if (data.isSuccess === true) {
             let accessToken = data.data["accessToken"];
             let refreshToken = data.data["refreshToken"];
-            console.log("login success token created!!!! >> ", accessToken, refreshToken);
+            console.log(
+              "login success token created!!!! >> ",
+              accessToken,
+              refreshToken
+            );
             commit("SET_IS_LOGIN", true);
             commit("SET_IS_LOGIN_ERROR", false);
             commit("SET_IS_VALID_TOKEN", true);
@@ -125,20 +129,23 @@ const memberStore = {
     //   );
     // },
     async userLogout({ commit }) {
-      await logout(
-        ({ data }) => {
-          if (data.isSuccess === true) {
-            commit("SET_IS_LOGIN", false);
-            commit("SET_USER_INFO", null);
-            commit("SET_IS_VALID_TOKEN", false);
-          } else {
-            console.log("유저 정보 없음!!!!");
-          }
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+      commit("SET_IS_LOGIN", false);
+      commit("SET_USER_INFO", null);
+      commit("SET_IS_VALID_TOKEN", false);
+      // await logout(
+      //   ({ data }) => {
+      //     if (data.isSuccess === true) {
+      //       commit("SET_IS_LOGIN", false);
+      //       commit("SET_USER_INFO", null);
+      //       commit("SET_IS_VALID_TOKEN", false);
+      //     } else {
+      //       console.log("유저 정보 없음!!!!");
+      //     }
+      //   },
+      //   (error) => {
+      //     console.log(error);
+      //   }
+      // );
     },
   },
 };

@@ -10,10 +10,16 @@
         <b-button variant="outline-primary" @click="moveList">목록</b-button>
       </b-col>
       <!-- <b-col class="text-right" v-if="userInfo.userid === board.userid"> -->
-      <b-button variant="outline-info" size="sm" @click="moveModifyBoard" class="mr-2"
+      <b-button
+        variant="outline-info"
+        size="sm"
+        @click="moveModifyBoard"
+        class="mr-2"
         >글수정</b-button
       >
-      <b-button variant="outline-danger" size="sm" @click="deleteBoard">글삭제</b-button>
+      <b-button variant="outline-danger" size="sm" @click="deleteBoard"
+        >글삭제</b-button
+      >
       <!-- </b-col> -->
     </b-row>
     <b-row class="mb-1">
@@ -31,18 +37,25 @@
         </b-card>
       </b-col>
     </b-row>
+    <div class="board-view-comment">
+      <CommentList :board="board"></CommentList>
+    </div>
   </b-container>
 </template>
 
 <script>
 // import moment from "moment";
 import { getBoard } from "@/api/board";
+import CommentList from "@/components/comment/CommentList.vue";
 // import { mapState } from "vuex";
 
 // const memberStore = "memberStore";
 
 export default {
   name: "BoardDetail",
+  comments: {
+    CommentList,
+  },
   data() {
     return {
       board: {},
@@ -51,7 +64,8 @@ export default {
   computed: {
     // ...mapState(memberStore, ["userInfo"]),
     message() {
-      if (this.board.content) return this.board.content.split("\n").join("<br>");
+      if (this.board.content)
+        return this.board.content.split("\n").join("<br>");
       return "";
     },
   },
@@ -87,12 +101,14 @@ export default {
       this.$router.push({ name: "boardlist" });
     },
   },
-  // filters: {
-  //   dateFormat(regtime) {
-  //     return moment(new Date(regtime)).format("YY.MM.DD hh:mm:ss");
-  //   },
-  // },
+  components: { CommentList },
 };
 </script>
 
-<style></style>
+<style>
+.board-view-comment {
+  border: 1px solid black;
+  margin-top: 1rem;
+  padding: 2rem;
+}
+</style>
