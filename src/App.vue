@@ -1,14 +1,28 @@
 <template>
   <div id="app">
-    <nav>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </nav>
-    <router-view/>
+    <the-header-navbar></the-header-navbar>
+    <router-view></router-view>
   </div>
 </template>
 
+<script>
+import TheHeaderNavbar from "@/components/TheHeaderNavbar";
+
+export default {
+  name: "App",
+  components: {
+    TheHeaderNavbar,
+  },
+};
+</script>
+
 <style>
+@font-face {
+  font-family: "bitbit";
+  src: url("//cdn.df.nexon.com/img/common/font/DNFBitBit-Regular.woff"),
+    url("//cdn.df.nexon.com/img/common/font/DNFBitBit-Regular.woff2");
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
