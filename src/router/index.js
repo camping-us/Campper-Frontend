@@ -11,6 +11,29 @@ const routes = [
     component: HomeView,
   },
   {
+    path: "/user",
+    name: "user",
+    component: () => import(/* webpackChunkName: "user" */ "@/views/UserView"),
+    children: [
+      {
+        path: "join",
+        name: "join",
+        component: () => import(/* webpackChunkName: "user" */ "@/components/user/UserRegister"),
+      },
+      {
+        path: "login",
+        name: "login",
+        component: () => import(/* webpackChunkName: "user" */ "@/components/user/UserLogin"),
+      },
+      {
+        path: "mypage",
+        name: "mypage",
+        // beforeEnter: onlyAuthUser,
+        component: () => import(/* webpackChunkName: "user" */ "@/components/user/UserMyPage"),
+      },
+    ],
+  },
+  {
     path: "/board",
     name: "board",
     component: () => import(/* webpackChunkName: "board" */ "@/views/BoardView"),
@@ -46,7 +69,7 @@ const routes = [
         component: () => import(/* webpackChunkName: "board" */ "@/components/board/BoardDelete"),
       },
     ],
-  }
+  },
 ];
 
 const router = new VueRouter({
