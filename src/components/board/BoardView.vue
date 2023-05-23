@@ -10,10 +10,16 @@
         <b-button variant="outline-primary" @click="moveList">목록</b-button>
       </b-col>
       <b-col class="text-right" v-if="userInfo.id === board.userId">
-        <b-button variant="outline-info" size="sm" @click="moveModifyBoard" class="mr-2"
+        <b-button
+          variant="outline-info"
+          size="sm"
+          @click="moveModifyBoard"
+          class="mr-2"
           >글수정</b-button
         >
-        <b-button variant="outline-danger" size="sm" @click="deleteBoard">글삭제</b-button>
+        <b-button variant="outline-danger" size="sm" @click="deleteBoard"
+          >글삭제</b-button
+        >
       </b-col>
     </b-row>
     <b-row class="mb-1">
@@ -23,6 +29,7 @@
             ${board.title} </h3>
             <div>
               <h6>${board.userName}</h6>
+              <h6>${createdAt}</h6>
             </div>`"
           class="mb-2"
           border-variant="dark"
@@ -68,13 +75,15 @@ export default {
   data() {
     return {
       board: {},
+      createdAt: "",
       boardId: this.$route.params.boardno + "",
     };
   },
   computed: {
     ...mapState(memberStore, ["userInfo"]),
     message() {
-      if (this.board.content) return this.board.content.split("\n").join("<br>");
+      if (this.board.content)
+        return this.board.content.split("\n").join("<br>");
       return "";
     },
   },
@@ -84,6 +93,7 @@ export default {
       param,
       ({ data }) => {
         this.board = data.data;
+        this.createdAt = `${data.data.createdAt[0]}-${data.data.createdAt[1]}-${data.data.createdAt[2]}`;
       },
       (error) => {
         console.log(error);

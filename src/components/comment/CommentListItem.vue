@@ -3,8 +3,12 @@
     <div class="d-flex w-100 justify-content-between">
       <h5 class="mb-1">{{ commentObj.userName }}</h5>
       <small class="text-muted" v-if="userInfo.id === commentObj.userId">
-        <b-button variant="outline-info" size="sm" @click="modifyCommentFunc">수정</b-button>
-        <b-button variant="outline-danger" size="sm" @click="deleteCommentFunc">삭제</b-button>
+        <b-button variant="outline-info" size="sm" @click="modifyCommentFunc"
+          >수정</b-button
+        >
+        <b-button variant="outline-danger" size="sm" @click="deleteCommentFunc"
+          >삭제</b-button
+        >
       </small>
       <small class="text-right">
         좋아요 수: {{ commentObj.likeCnt }}
@@ -23,7 +27,7 @@
       {{ commentObj.content }}
     </p>
 
-    <small class="text-muted">시간: {{ commentObj.createdAt }}</small>
+    <small class="text-muted">시간: {{ createdAt }}</small>
   </b-list-group-item>
 </template>
 <script>
@@ -41,7 +45,7 @@ export default {
   components: {},
   data() {
     return {
-      name: "test",
+      createdAt: `${this.commentObj.createdAt[0]}-${this.commentObj.createdAt[1]}-${this.commentObj.createdAt[2]}`,
     };
   },
   computed: {
