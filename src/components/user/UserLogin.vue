@@ -67,7 +67,7 @@ export default {
     ...mapActions(memberStore, ["userConfirm", "getUserInfo"]),
     async confirm() {
       await this.userConfirm(this.user);
-      let token = sessionStorage.getItem("accessToken");
+      let token = localStorage.getItem("accessToken");
       //   console.log("1. confirm() token >> " + token);
       if (this.isLogin) {
         await this.getUserInfo(token);

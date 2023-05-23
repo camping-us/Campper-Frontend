@@ -111,8 +111,8 @@ export default {
       //+ satate에 isLogin, userInfo 정보 변경)
       // this.$store.dispatch("userLogout", this.userInfo.userid);
       this.userLogout();
-      sessionStorage.removeItem("accessToken"); //저장된 토큰 없애기
-      sessionStorage.removeItem("refreshToken"); //저장된 토큰 없애기
+      localStorage.removeItem("accessToken"); //저장된 토큰 없애기
+      localStorage.removeItem("refreshToken"); //저장된 토큰 없애기
       if (this.$route.path != "/") this.$router.push({ name: "main" });
     },
   },
