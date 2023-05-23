@@ -2,16 +2,11 @@
   <b-row class="mb-1">
     <b-col style="text-align: left">
       <b-form @submit="onSubmit" @reset="onReset">
-        <b-form-group
-          id="userid-group"
-          label="작성자:"
-          label-for="userid"
-          description="작성자를 입력하세요."
-        >
+        <b-form-group id="userid-group" label="작성자:" label-for="userid">
           <b-form-input
             id="userid"
-            :disabled="isUserid"
-            v-model="board.userid"
+            :disabled="true"
+            v-model="board.userName"
             type="text"
             required
             placeholder="작성자 입력..."
@@ -19,14 +14,14 @@
         </b-form-group>
 
         <b-form-group
-          id="subject-group"
+          id="title-group"
           label="제목:"
-          label-for="subject"
+          label-for="title"
           description="제목을 입력하세요."
         >
           <b-form-input
-            id="subject"
-            v-model="board.subject"
+            id="title"
+            v-model="board.title"
             type="text"
             required
             placeholder="제목 입력..."
@@ -43,16 +38,10 @@
           ></b-form-textarea>
         </b-form-group>
 
-        <b-button
-          type="submit"
-          variant="primary"
-          class="m-1"
-          v-if="this.type === 'register'"
+        <b-button type="submit" variant="primary" class="m-1" v-if="this.type === 'register'"
           >글작성</b-button
         >
-        <b-button type="submit" variant="primary" class="m-1" v-else
-          >글수정</b-button
-        >
+        <b-button type="submit" variant="primary" class="m-1" v-else>글수정</b-button>
         <b-button type="reset" variant="danger" class="m-1">초기화</b-button>
       </b-form>
     </b-col>
@@ -68,8 +57,8 @@ export default {
     return {
       board: {
         boardno: 0,
-        userid: "",
-        subject: "",
+        userName: localStorage.getItem("nickName"),
+        title: "",
         content: "",
       },
       isUserid: false,
@@ -84,11 +73,11 @@ export default {
       getBoard(
         param,
         ({ data }) => {
-          // this.board.boardno = data.board.boardno;
-          // this.board.userid = data.board.userid;
-          // this.board.subject = data.board.subject;
-          // this.board.content = data.board.content;
-          this.board = data;
+          this.board.boardno = data.data.id;
+          this.board.userName = data.data.userName;
+          this.board.title = data.data.title;
+          this.board.content = data.data.content;
+          this.board = data.data;
         },
         (error) => {
           console.log(error);
@@ -104,41 +93,35 @@ export default {
       let err = true;
       let msg = "";
       !this.board.userid &&
-        ((msg = "작성자 입력해주세요"),
-        (err = false),
-        this.$refs.userid.focus());
-      err &&
-        !this.board.subject &&
-        ((msg = "제목 입력해주세요"),
-        (err = false),
-        this.$refs.subject.focus());
+        err &&
+        !this.board.title &&
+        ((msg = "제목 입력해주세요"), (err = false), this.$refs.title.focus());
       err &&
         !this.board.content &&
-        ((msg = "내용 입력해주세요"),
-        (err = false),
-        this.$refs.content.focus());
+        ((msg = "내용 입력해주세요"), (err = false), this.$refs.content.focus());
 
       if (!err) alert(msg);
-      else this.type === "register" ? this.registboard() : this.modifyboard();
+      else this.type === "register" ? this.registBoard() : this.modifyBoard();
     },
     onReset(event) {
       event.preventDefault();
       this.board.boardno = 0;
-      this.board.subject = "";
+      this.board.title = "";
       this.board.content = "";
       this.moveList();
     },
     registBoard() {
       let param = {
-        userid: this.board.userid,
-        subject: this.board.subject,
+        title: this.board.title,
         content: this.board.content,
+        category: "FREE_BOARD",
+        images: [],
       };
       writeBoard(
         param,
         ({ data }) => {
           let msg = "등록 처리시 문제가 발생했습니다.";
-          if (data === "success") {
+          if (data.isSuccess === true) {
             msg = "등록이 완료되었습니다.";
           }
           alert(msg);
@@ -151,16 +134,15 @@ export default {
     },
     modifyBoard() {
       let param = {
-        boardno: this.board.boardno,
-        userid: this.board.userid,
-        subject: this.board.subject,
+        title: this.board.title,
         content: this.board.content,
       };
       modifyBoard(
+        this.$route.params.boardno,
         param,
         ({ data }) => {
           let msg = "수정 처리시 문제가 발생했습니다.";
-          if (data === "success") {
+          if (data.isSuccess === true) {
             msg = "수정이 완료되었습니다.";
           }
           alert(msg);

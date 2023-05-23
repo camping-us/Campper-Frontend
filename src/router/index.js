@@ -2,7 +2,33 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import HomeView from "../views/HomeView.vue";
 
+import store from "@/store";
+
 Vue.use(VueRouter);
+
+let userNickName = "";
+
+const onlyAuthUser = async (to, from, next) => {
+  const checkUserInfo = store.getters["memberStore/checkUserInfo"];
+  const checkToken = store.getters["memberStore/checkToken"];
+  let token = localStorage.getItem("accessToken");
+  console.log("로그인 처리 전", checkUserInfo, token);
+
+  if (checkUserInfo != null && token) {
+    console.log("토큰 유효성 체크하러 가자!!!!");
+    await store.dispatch("memberStore/getUserInfo", token);
+  }
+  if (!checkToken || checkUserInfo === null) {
+    alert("로그인이 필요한 페이지입니다..");
+    // next({ name: "login" });
+    router.push({ name: "login" });
+  } else {
+    console.log("로그인 했다!!!!!!!!!!!!!.");
+    userNickName = checkUserInfo.nickName;
+    localStorage.setItem("nickName", userNickName);
+    next();
+  }
+};
 
 const routes = [
   {
@@ -28,7 +54,7 @@ const routes = [
       {
         path: "mypage",
         name: "mypage",
-        // beforeEnter: onlyAuthUser,
+        beforeEnter: onlyAuthUser,
         component: () => import(/* webpackChunkName: "user" */ "@/components/user/UserMyPage"),
       },
     ],
@@ -47,25 +73,25 @@ const routes = [
       {
         path: "write",
         name: "boardwrite",
-        // beforeEnter: onlyAuthUser,
+        beforeEnter: onlyAuthUser,
         component: () => import(/* webpackChunkName: "board" */ "@/components/board/BoardWrite"),
       },
       {
         path: "view/:boardno",
         name: "boardview",
-        // beforeEnter: onlyAuthUser,
+        beforeEnter: onlyAuthUser,
         component: () => import(/* webpackChunkName: "board" */ "@/components/board/BoardView"),
       },
       {
-        path: "modify",
+        path: "modify/:boardno",
         name: "boardmodify",
-        // beforeEnter: onlyAuthUser,
+        beforeEnter: onlyAuthUser,
         component: () => import(/* webpackChunkName: "board" */ "@/components/board/BoardModify"),
       },
       {
         path: "delete/:boardno",
         name: "boarddelete",
-        // beforeEnter: onlyAuthUser,
+        beforeEnter: onlyAuthUser,
         component: () => import(/* webpackChunkName: "board" */ "@/components/board/BoardDelete"),
       },
     ],

@@ -57,6 +57,7 @@ export default {
       param,
       ({ data }) => {
         this.boards = data.data;
+        console.log("boards:" + this.boards[0].likeCnt);
       },
       (error) => {
         console.log(error);
