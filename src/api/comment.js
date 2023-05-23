@@ -7,18 +7,24 @@ function listComment(param, success, fail) {
 }
 
 function writeComment(param, success, fail) {
-  api.defaults.headers.common["Authorization"] = `Bearer ${localStorage.getItem("accessToken")}`;
+  api.defaults.headers.common["Authorization"] = `Bearer ${localStorage.getItem(
+    "accessToken"
+  )}`;
   api.post(`/comments`, JSON.stringify(param)).then(success).catch(fail);
 }
 
 function modifyComment(param, success, fail) {
-  api.defaults.headers.common["Authorization"] = `Bearer ${localStorage.getItem("accessToken")}`;
+  api.defaults.headers.common["Authorization"] = `Bearer ${localStorage.getItem(
+    "accessToken"
+  )}`;
 
   api.get(`/comments`, JSON.stringify(param)).then(success).catch(fail);
 }
 
 function deleteComment(param, success, fail) {
-  api.defaults.headers.common["Authorization"] = `Bearer ${localStorage.getItem("accessToken")}`;
+  api.defaults.headers.common["Authorization"] = `Bearer ${localStorage.getItem(
+    "accessToken"
+  )}`;
 
   api.delete(`/comments`, { params: param }).then(success).catch(fail);
 }

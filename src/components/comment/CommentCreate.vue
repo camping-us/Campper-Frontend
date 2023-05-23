@@ -9,7 +9,9 @@
         max-rows="6"
       ></b-form-textarea>
       <b-input-group-append>
-        <b-button class="m-1" variant="primary" @click="registComment()">댓글 작성하기</b-button>
+        <b-button class="m-1" variant="primary" @click="registComment()"
+          >댓글 작성하기</b-button
+        >
       </b-input-group-append>
     </b-input-group>
   </div>
