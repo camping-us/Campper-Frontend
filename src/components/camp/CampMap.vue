@@ -33,7 +33,10 @@ export default {
               this.datas[i].lineIntro +
               "\n평점: " +
               this.retNum(this.datas[i].total / this.datas[i].voteCnt),
-            latlng: new kakao.maps.LatLng(this.datas[i].mapY, this.datas[i].mapX),
+            latlng: new kakao.maps.LatLng(
+              this.datas[i].mapY,
+              this.datas[i].mapX
+            ),
           };
           this.positions.push(position);
         }
@@ -116,5 +119,6 @@ export default {
   margin-top: 30px;
   width: 100%;
   height: 600px;
+  border-radius: 10px;
 }
 </style>
