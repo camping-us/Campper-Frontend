@@ -7,12 +7,20 @@
     </b-row>
     <b-row class="mb-1">
       <b-col class="text-right">
-        <b-button variant="outline-primary" @click="moveWrite()">글쓰기</b-button>
+        <b-button variant="outline-primary" @click="moveWrite()"
+          >글쓰기</b-button
+        >
       </b-col>
     </b-row>
     <b-row>
       <b-col>
-        <b-table striped hover :items="boards" :fields="fields" @row-clicked="viewboard">
+        <b-table
+          striped
+          hover
+          :items="boards"
+          :fields="fields"
+          @row-clicked="viewboard"
+        >
           <template #cell(subject)="data">
             <router-link
               :to="{
@@ -41,7 +49,6 @@ export default {
         { key: "id", label: "글번호", tdClass: "tdClass" },
         { key: "title", label: "제목", tdClass: "tdSubject" },
         { key: "userName", label: "작성자", tdClass: "tdClass" },
-        // { key: "regtime", label: "작성일", tdClass: "tdClass" },
         { key: "likeCnt", label: "좋아요수", tdClass: "tdClass" },
       ],
     };
@@ -57,7 +64,7 @@ export default {
       param,
       ({ data }) => {
         this.boards = data.data;
-        console.log("boards:" + this.boards[0].likeCnt);
+        console.log("boards:" + this.boards[0].createdAt);
       },
       (error) => {
         console.log(error);

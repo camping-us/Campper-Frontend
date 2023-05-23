@@ -38,10 +38,16 @@
           ></b-form-textarea>
         </b-form-group>
 
-        <b-button type="submit" variant="primary" class="m-1" v-if="this.type === 'register'"
+        <b-button
+          type="submit"
+          variant="primary"
+          class="m-1"
+          v-if="this.type === 'register'"
           >글작성</b-button
         >
-        <b-button type="submit" variant="primary" class="m-1" v-else>글수정</b-button>
+        <b-button type="submit" variant="primary" class="m-1" v-else
+          >글수정</b-button
+        >
         <b-button type="reset" variant="danger" class="m-1">초기화</b-button>
       </b-form>
     </b-col>
@@ -98,7 +104,9 @@ export default {
         ((msg = "제목 입력해주세요"), (err = false), this.$refs.title.focus());
       err &&
         !this.board.content &&
-        ((msg = "내용 입력해주세요"), (err = false), this.$refs.content.focus());
+        ((msg = "내용 입력해주세요"),
+        (err = false),
+        this.$refs.content.focus());
 
       if (!err) alert(msg);
       else this.type === "register" ? this.registBoard() : this.modifyBoard();
@@ -114,7 +122,7 @@ export default {
       let param = {
         title: this.board.title,
         content: this.board.content,
-        category: "FREE_BOARD",
+        category: "자유게시판",
         images: [],
       };
       writeBoard(

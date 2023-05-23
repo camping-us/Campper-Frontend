@@ -38,7 +38,6 @@ export default {
       param,
       ({ data }) => {
         this.comments = data.data;
-        console.log(this.comments);
       },
       (error) => {
         console.log(error);

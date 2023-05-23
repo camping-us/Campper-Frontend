@@ -7,7 +7,9 @@ function listBoard(param, success, fail) {
 }
 
 function writeBoard(board, success, fail) {
-  api.defaults.headers.common["Authorization"] = `Bearer ${localStorage.getItem("accessToken")}`;
+  api.defaults.headers.common["Authorization"] = `Bearer ${localStorage.getItem(
+    "accessToken"
+  )}`;
   api.post(`/boards`, JSON.stringify(board)).then(success).catch(fail);
 }
 
@@ -16,12 +18,19 @@ function getBoard(boardno, success, fail) {
 }
 
 function modifyBoard(boardno, board, success, fail) {
-  api.defaults.headers.common["Authorization"] = `Bearer ${localStorage.getItem("accessToken")}`;
-  api.put(`/boards/${boardno}`, JSON.stringify(board)).then(success).catch(fail);
+  api.defaults.headers.common["Authorization"] = `Bearer ${localStorage.getItem(
+    "accessToken"
+  )}`;
+  api
+    .put(`/boards/${boardno}`, JSON.stringify(board))
+    .then(success)
+    .catch(fail);
 }
 
 function deleteBoard(boardno, success, fail) {
-  api.defaults.headers.common["Authorization"] = `Bearer ${localStorage.getItem("accessToken")}`;
+  api.defaults.headers.common["Authorization"] = `Bearer ${localStorage.getItem(
+    "accessToken"
+  )}`;
   api.delete(`/boards/${boardno}`).then(success).catch(fail);
 }
 
