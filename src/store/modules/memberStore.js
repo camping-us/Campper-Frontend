@@ -1,6 +1,6 @@
 import jwtDecode from "jwt-decode";
 // import router from "@/router";
-import { login, logout } from "@/api/auth";
+import { login } from "@/api/auth";
 import { getProfile } from "@/api/member";
 // findById, tokenRegeneration, logout
 
@@ -47,8 +47,8 @@ const memberStore = {
             commit("SET_IS_LOGIN", true);
             commit("SET_IS_LOGIN_ERROR", false);
             commit("SET_IS_VALID_TOKEN", true);
-            sessionStorage.setItem("accessToken", accessToken);
-            sessionStorage.setItem("refreshToken", refreshToken);
+            localStorage.setItem("accessToken", accessToken);
+            localStorage.setItem("refreshToken", refreshToken);
           } else {
             commit("SET_IS_LOGIN", false);
             commit("SET_IS_LOGIN_ERROR", true);
@@ -68,7 +68,7 @@ const memberStore = {
         ({ data }) => {
           if (data.isSuccess === true) {
             commit("SET_USER_INFO", data.data);
-            // console.log("3. getUserInfo data >> ", data);
+            console.log("3. getUserInfo data >> ", data);
           } else {
             console.log("유저 정보 없음!!!!");
           }
@@ -84,14 +84,14 @@ const memberStore = {
       );
     },
     // async tokenRegeneration({ commit, state }) {
-    //   console.log("토큰 재발급 >> 기존 토큰 정보 : {}", sessionStorage.getItem("access-token"));
+    //   console.log("토큰 재발급 >> 기존 토큰 정보 : {}", localStorage.getItem("access-token"));
     //   await tokenRegeneration(
     //     JSON.stringify(state.userInfo),
     //     ({ data }) => {
     //       if (data.message === "success") {
     //         let accessToken = data["access-token"];
     //         console.log("재발급 완료 >> 새로운 토큰 : {}", accessToken);
-    //         sessionStorage.setItem("access-token", accessToken);
+    //         localStorage.setItem("access-token", accessToken);
     //         commit("SET_IS_VALID_TOKEN", true);
     //       }
     //     },
@@ -125,20 +125,23 @@ const memberStore = {
     //   );
     // },
     async userLogout({ commit }) {
-      await logout(
-        ({ data }) => {
-          if (data.isSuccess === true) {
-            commit("SET_IS_LOGIN", false);
-            commit("SET_USER_INFO", null);
-            commit("SET_IS_VALID_TOKEN", false);
-          } else {
-            console.log("유저 정보 없음!!!!");
-          }
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+      commit("SET_IS_LOGIN", false);
+      commit("SET_USER_INFO", null);
+      commit("SET_IS_VALID_TOKEN", false);
+      // await logout(
+      //   ({ data }) => {
+      //     if (data.isSuccess === true) {
+      //       commit("SET_IS_LOGIN", false);
+      //       commit("SET_USER_INFO", null);
+      //       commit("SET_IS_VALID_TOKEN", false);
+      //     } else {
+      //       console.log("유저 정보 없음!!!!");
+      //     }
+      //   },
+      //   (error) => {
+      //     console.log(error);
+      //   }
+      // );
     },
   },
 };

@@ -7,7 +7,7 @@ async function signup(user, success, fail) {
 }
 
 async function getProfile(user, success, fail) {
-  api.defaults.headers.common["Authorization"] = `Bearer ${sessionStorage.getItem("accessToken")}`;
+  api.defaults.headers.common["Authorization"] = `Bearer ${localStorage.getItem("accessToken")}`;
   await api.get(`/users/profile`).then(success).catch(fail);
 }
 
