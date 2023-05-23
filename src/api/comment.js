@@ -2,25 +2,25 @@ import { apiInstance } from "./index.js";
 
 const api = apiInstance();
 
-function listComment(board, param, success, fail) {
-  console.log(board);
-  let boardId = board.id;
-  api.get(`/comments/${boardId}`, { params: param }).then(success).catch(fail);
+function listComment(param, success, fail) {
+  api.get(`/comments`, { params: param }).then(success).catch(fail);
 }
 
-// function writeComment(param, success, fail) {
-//   api
-//     .post(`/comments/${param.boardId}`, { params: param })
-//     .then(success)
-//     .catch(fail);
-// }
+function writeComment(param, success, fail) {
+  api.defaults.headers.common["Authorization"] = `Bearer ${localStorage.getItem("accessToken")}`;
+  api.post(`/comments`, JSON.stringify(param)).then(success).catch(fail);
+}
 
-// function modifyComment(param, success, fail) {
-//   api.get(`/comments`, { params: param }).then(success).catch(fail);
-// }
+function modifyComment(param, success, fail) {
+  api.defaults.headers.common["Authorization"] = `Bearer ${localStorage.getItem("accessToken")}`;
 
-// function deleteComment(param, success, fail) {
-//   api.delete(`/comments`, { params: param }).then(success).catch(fail);
-// }
+  api.get(`/comments`, JSON.stringify(param)).then(success).catch(fail);
+}
 
-export { listComment };
+function deleteComment(param, success, fail) {
+  api.defaults.headers.common["Authorization"] = `Bearer ${localStorage.getItem("accessToken")}`;
+
+  api.delete(`/comments`, { params: param }).then(success).catch(fail);
+}
+
+export { listComment, writeComment, modifyComment, deleteComment };
