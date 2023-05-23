@@ -37,6 +37,24 @@ const routes = [
     component: HomeView,
   },
   {
+    path: "/camp",
+    name: "camp",
+    component: () => import(/* webpackChunkName: "board" */ "@/views/CampView"),
+    redirect: "/camp/list",
+    children: [
+      {
+        path: "list",
+        name: "campList",
+        component: () => import(/* webpackChunkName: "board" */ "@/components/camp/CampMap"),
+      },
+      {
+        path: "view/:campno",
+        name: "campInfo",
+        component: () => import(/* webpackChunkName: "board" */ "@/components/camp/CampInfo"),
+      },
+    ],
+  },
+  {
     path: "/user",
     name: "user",
     component: () => import(/* webpackChunkName: "user" */ "@/views/UserView"),
