@@ -8,7 +8,7 @@
           width="100"
           height="100"
         />
-        <a id="logo"> <div margin-top:50px>CAMMPER</div></a>
+        <a id="logo"> <div margin-top:50px>CAMPPER</div></a>
       </b-navbar-brand>
 
       <b-navbar-toggle

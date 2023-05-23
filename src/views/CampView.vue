@@ -15,6 +15,7 @@ export default {
   text-decoration: #42b983 wavy underline;
   text-decoration-thickness: 3px;
   display: inline-block;
+  margin: auto;
   /* background: linear-gradient(180deg, rgba(255, 255, 255, 0) 70%, #42b983 30%); */
 }
 </style>
