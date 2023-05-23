@@ -7,28 +7,20 @@
     </b-row>
     <b-row class="mb-1">
       <b-col class="text-right">
-        <b-button variant="outline-primary" @click="moveWrite()"
-          >글쓰기</b-button
-        >
+        <b-button variant="outline-primary" @click="moveWrite()">글쓰기</b-button>
       </b-col>
     </b-row>
     <b-row>
       <b-col>
-        <b-table
-          striped
-          hover
-          :items="boards"
-          :fields="fields"
-          @row-clicked="viewboard"
-        >
+        <b-table striped hover :items="boards" :fields="fields" @row-clicked="viewboard">
           <template #cell(subject)="data">
             <router-link
               :to="{
                 name: 'boardview',
-                params: { boardno: data.item.boardno },
+                params: { boardno: data.id },
               }"
             >
-              {{ data.item.subject }}
+              {{ data.item.title }}
             </router-link>
           </template>
         </b-table>
@@ -46,11 +38,11 @@ export default {
     return {
       boards: [],
       fields: [
-        { key: "boardno", label: "글번호", tdClass: "tdClass" },
-        { key: "subject", label: "제목", tdClass: "tdSubject" },
-        { key: "userid", label: "작성자", tdClass: "tdClass" },
-        { key: "regtime", label: "작성일", tdClass: "tdClass" },
-        { key: "hit", label: "조회수", tdClass: "tdClass" },
+        { key: "id", label: "글번호", tdClass: "tdClass" },
+        { key: "title", label: "제목", tdClass: "tdSubject" },
+        { key: "userName", label: "작성자", tdClass: "tdClass" },
+        // { key: "regtime", label: "작성일", tdClass: "tdClass" },
+        { key: "likeCnt", label: "좋아요수", tdClass: "tdClass" },
       ],
     };
   },
@@ -64,7 +56,8 @@ export default {
     listBoard(
       param,
       ({ data }) => {
-        this.boards = data;
+        this.boards = data.data;
+        console.log("boards:" + this.boards[0].likeCnt);
       },
       (error) => {
         console.log(error);
@@ -78,7 +71,7 @@ export default {
     viewboard(board) {
       this.$router.push({
         name: "boardview",
-        params: { boardno: board.boardno },
+        params: { boardno: board.id },
       });
     },
   },
