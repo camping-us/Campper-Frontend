@@ -111,7 +111,7 @@ export default {
       }
     },
     moveList() {
-      this.$router.push({ name: "boardlist" });
+      this.$router.push({ name: "boardlist", query: { category: this.board.category } });
     },
     refreshList() {
       this.$router.go(this.$router.currentRoute);
