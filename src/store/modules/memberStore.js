@@ -1,6 +1,6 @@
 import jwtDecode from "jwt-decode";
 // import router from "@/router";
-import { login } from "@/api/auth";
+import { login, reissue } from "@/api/auth";
 import { getProfile } from "@/api/member";
 // findById, tokenRegeneration, logout
 
@@ -43,7 +43,11 @@ const memberStore = {
           if (data.isSuccess === true) {
             let accessToken = data.data["accessToken"];
             let refreshToken = data.data["refreshToken"];
-            console.log("login success token created!!!! >> ", accessToken, refreshToken);
+            console.log(
+              "login success token created!!!! >> ",
+              accessToken,
+              refreshToken
+            );
             commit("SET_IS_LOGIN", true);
             commit("SET_IS_LOGIN_ERROR", false);
             commit("SET_IS_VALID_TOKEN", true);
@@ -79,66 +83,79 @@ const memberStore = {
             error.response.status
           );
           commit("SET_IS_VALID_TOKEN", false);
-
-          // 재발급 기능 완성되면 빼기
-          commit("SET_IS_LOGIN", false);
-          commit("SET_USER_INFO", null);
-          console.log(dispatch);
-          // await dispatch("tokenRegeneration");
+          await dispatch("tokenRegeneration");
         }
       );
     },
-    // async tokenRegeneration({ commit, state }) {
-    //   console.log("토큰 재발급 >> 기존 토큰 정보 : {}", localStorage.getItem("accessToken"));
-    //   await tokenRegeneration(
-    //     JSON.stringify(state.userInfo),
-    //     ({ data }) => {
-    //       if (data.message === "success") {
-    //         let accessToken = data["access-token"];
-    //         console.log("재발급 완료 >> 새로운 토큰 : {}", accessToken);
-    //         localStorage.setItem("access-token", accessToken);
-    //         commit("SET_IS_VALID_TOKEN", true);
-    //       }
-    //     },
-    //     async (error) => {
-    //       // HttpStatus.UNAUTHORIZE(401) : RefreshToken 기간 만료 >> 다시 로그인!!!!
-    //       if (error.response.status === 401) {
-    //         console.log("갱신 실패");
-    //         // 다시 로그인 전 DB에 저장된 RefreshToken 제거.
-    //         await logout(
-    //           state.userInfo.userid,
-    //           ({ data }) => {
-    //             if (data.message === "success") {
-    //               console.log("리프레시 토큰 제거 성공");
-    //             } else {
-    //               console.log("리프레시 토큰 제거 실패");
-    //             }
-    //             alert("RefreshToken 기간 만료!!! 다시 로그인해 주세요.");
-    //             commit("SET_IS_LOGIN", false);
-    //             commit("SET_USER_INFO", null);
-    //             commit("SET_IS_VALID_TOKEN", false);
-    //             router.push({ name: "login" });
-    //           },
-    //           (error) => {
-    //             console.log(error);
-    //             commit("SET_IS_LOGIN", false);
-    //             commit("SET_USER_INFO", null);
-    //           }
-    //         );
-    //       }
-    //     }
-    //   );
-    // },
+    async tokenRegeneration({ commit }) {
+      console.log(
+        "토큰 재발급 >> 기존 토큰 정보 : {}",
+        localStorage.getItem("accessToken")
+      );
+      let token = {
+        accessToken: localStorage.getItem("accessToken"),
+        refreshToken: localStorage.getItem("refreshToken"),
+      };
+      await reissue(
+        // JSON.stringify(state.userInfo),
+        token,
+        ({ data }) => {
+          if (data.isSuccess === true) {
+            let accessToken = data.data["accessToken"];
+            console.log("재발급 완료 >> 새로운 토큰 : {}", accessToken);
+            localStorage.setItem("accessToken", accessToken);
+            commit("SET_IS_VALID_TOKEN", true);
+          }
+        },
+        async (error) => {
+          // HttpStatus.UNAUTHORIZE(401) : RefreshToken 기간 만료 >> 다시 로그인!!!!
+          if (error.response.status === 401) {
+            console.log("갱신 실패");
+            // 다시 로그인 전 DB에 저장된 RefreshToken 제거.
+            // await logout(
+            //   state.userInfo.userid,
+            //   ({ data }) => {
+            //     if (data.message === "success") {
+            //       console.log("리프레시 토큰 제거 성공");
+            //     } else {
+            //       console.log("리프레시 토큰 제거 실패");
+            //     }
+            //     alert("RefreshToken 기간 만료!!! 다시 로그인해 주세요.");
+            //     commit("SET_IS_LOGIN", false);
+            //     commit("SET_USER_INFO", null);
+            //     commit("SET_IS_VALID_TOKEN", false);
+            //     router.push({ name: "login" });
+            //   },
+            //   (error) => {
+            //     console.log(error);
+            //     commit("SET_IS_LOGIN", false);
+            //     commit("SET_USER_INFO", null);
+            //   }
+            // );
+          }
+        }
+      );
+    },
     async userLogout({ commit }) {
       commit("SET_IS_LOGIN", false);
       commit("SET_USER_INFO", null);
       commit("SET_IS_VALID_TOKEN", false);
+      localStorage.removeItem("accessToken"); //저장된 토큰 없애기
+      localStorage.removeItem("refreshToken"); //저장된 토큰 없애기
+      // let token = {
+      //   accessToken: localStorage.getItem("accessToken"),
+      //   refreshToken: localStorage.getItem("refreshToken"),
+      // };
       // await logout(
+      //   token,
       //   ({ data }) => {
+      //     console.log("제발:", data);
       //     if (data.isSuccess === true) {
       //       commit("SET_IS_LOGIN", false);
       //       commit("SET_USER_INFO", null);
       //       commit("SET_IS_VALID_TOKEN", false);
+      //       localStorage.removeItem("accessToken"); //저장된 토큰 없애기
+      //       localStorage.removeItem("refreshToken"); //저장된 토큰 없애기
       //     } else {
       //       console.log("유저 정보 없음!!!!");
       //     }
