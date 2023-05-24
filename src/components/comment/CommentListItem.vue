@@ -3,12 +3,8 @@
     <div class="d-flex w-100 justify-content-between">
       <h5 class="mb-1">{{ commentObj.userName }}</h5>
       <small class="text-muted" v-if="userInfo.id === commentObj.userId">
-        <b-button variant="outline-info" size="sm" @click="modifyCommentFunc"
-          >수정</b-button
-        >
-        <b-button variant="outline-danger" size="sm" @click="deleteCommentFunc"
-          >삭제</b-button
-        >
+        <b-button variant="outline-info" size="sm" @click="modifyCommentFunc">수정</b-button>
+        <b-button variant="outline-danger" size="sm" @click="deleteCommentFunc">삭제</b-button>
       </small>
       <small class="text-right">
         좋아요 수: {{ commentObj.likeCnt }}
@@ -31,7 +27,7 @@
   </b-list-group-item>
 </template>
 <script>
-import { modifyComment } from "@/api/comment.js";
+import { modifyComment, deleteComment } from "@/api/comment.js";
 import { commentLike } from "@/api/comment-like.js";
 import { mapState } from "vuex";
 
@@ -67,7 +63,20 @@ export default {
         this.moveList();
       });
     },
-    deleteCommentFunc() {},
+    deleteCommentFunc() {
+      let param = {
+        commentId: this.commentObj.id,
+      };
+
+      deleteComment(param, ({ data }) => {
+        let msg = "삭제 처리시 문제가 발생했습니다.";
+        if (data.isSuccess === true) {
+          msg = "삭제가 완료되었습니다.";
+        }
+        alert(msg);
+        this.moveList();
+      });
+    },
     moveList() {
       this.$router.go(this.$router.currentRoute);
     },

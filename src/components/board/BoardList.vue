@@ -2,22 +2,25 @@
   <b-container class="bv-example-row mt-3">
     <b-row>
       <b-col>
-        <b-alert show><h3>글목록</h3></b-alert>
+        <b-alert show
+          ><h3>{{ $route.query.category }}</h3></b-alert
+        >
       </b-col>
     </b-row>
     <b-row class="mb-1">
-      <b-col class="text-right">
-        <b-button variant="outline-primary" @click="moveWrite()"
-          >글쓰기</b-button
-        >
+      <b-col class="text-right" style="text-align-last: right">
+        <b-button variant="outline-primary" @click="moveWrite()">글쓰기</b-button>
       </b-col>
     </b-row>
     <b-row>
       <b-col>
         <b-table
+          style="text-align-last: center"
+          id="my-table"
+          :per-page="perPage"
+          :items="boards"
           striped
           hover
-          :items="boards"
           :fields="fields"
           @row-clicked="viewboard"
         >
@@ -28,10 +31,16 @@
                 params: { boardno: data.id },
               }"
             >
-              {{ data.item.title }}
             </router-link>
           </template>
         </b-table>
+        <b-pagination
+          style="justify-content: center"
+          v-model="currentPage"
+          :total-rows="rows"
+          :per-page="perPage"
+          aria-controls="my-table"
+        ></b-pagination>
       </b-col>
     </b-row>
   </b-container>
@@ -44,9 +53,12 @@ export default {
   name: "BoardList",
   data() {
     return {
+      totalCnt: 0,
+      perPage: 10,
+      currentPage: 1,
+      category: this.$route.query.category,
       boards: [],
       fields: [
-        { key: "id", label: "글번호", tdClass: "tdClass" },
         { key: "title", label: "제목", tdClass: "tdSubject" },
         { key: "userName", label: "작성자", tdClass: "tdClass" },
         { key: "likeCnt", label: "좋아요수", tdClass: "tdClass" },
@@ -55,21 +67,13 @@ export default {
   },
   created() {
     let param = {
-      pg: 1,
-      spp: 20,
+      pg: this.currentPage,
+      spp: this.perPage,
       key: null,
       word: null,
+      category: this.category,
     };
-    listBoard(
-      param,
-      ({ data }) => {
-        this.boards = data.data;
-        console.log("boards:" + this.boards[0].createdAt);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+    this.getBoardList(param);
   },
   methods: {
     moveWrite() {
@@ -80,6 +84,46 @@ export default {
         name: "boardview",
         params: { boardno: board.id },
       });
+    },
+    getBoardList(param) {
+      listBoard(
+        param,
+        ({ data }) => {
+          this.boards = data.data.boards;
+          this.totalCnt = data.data.boardCnt;
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    },
+  },
+  computed: {
+    rows() {
+      return this.totalCnt;
+    },
+  },
+  watch: {
+    currentPage: function () {
+      let param = {
+        pg: this.currentPage,
+        spp: this.perPage,
+        key: null,
+        word: null,
+        category: this.category,
+      };
+      this.getBoardList(param);
+    },
+    $route() {
+      this.category = this.$route.query.category;
+      let param = {
+        pg: this.currentPage,
+        spp: this.perPage,
+        key: null,
+        word: null,
+        category: this.category,
+      };
+      this.getBoardList(param);
     },
   },
 };
