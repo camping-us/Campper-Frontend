@@ -8,7 +8,6 @@ async function login(user, success, fail) {
 
 async function logout(success, fail) {
   api.defaults.headers.common["Authorization"] = `Bearer ${localStorage.getItem("accessToken")}`;
-  //   console.log("모야모야" + api.defaults.headers.common["Authorization"]);
   await api.post(`/logout`).then(success).catch(fail);
 }
 

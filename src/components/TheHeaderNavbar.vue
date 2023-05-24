@@ -64,12 +64,16 @@
               <em>캠시판</em>
             </template>
             <b-dropdown-item href="#"
-              ><router-link :to="{ name: 'board' }" class="link"
+              ><router-link
+                :to="{ name: 'boardlist', query: { category: 'FREE_BOARD' } }"
+                class="link"
                 >자유게시판</router-link
               ></b-dropdown-item
             >
             <b-dropdown-item href="#"
-              ><router-link :to="{ name: '캠핑게시판' }" class="link"
+              ><router-link
+                :to="{ name: 'boardlist', query: { category: 'CAMP_BOARD' } }"
+                class="link"
                 >캠핑게시판</router-link
               ></b-dropdown-item
             >

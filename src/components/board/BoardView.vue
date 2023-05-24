@@ -10,16 +10,10 @@
         <b-button variant="outline-primary" @click="moveList">목록</b-button>
       </b-col>
       <b-col class="text-right" v-if="userInfo.id === board.userId">
-        <b-button
-          variant="outline-info"
-          size="sm"
-          @click="moveModifyBoard"
-          class="mr-2"
+        <b-button variant="outline-info" size="sm" @click="moveModifyBoard" class="mr-2"
           >글수정</b-button
         >
-        <b-button variant="outline-danger" size="sm" @click="deleteBoard"
-          >글삭제</b-button
-        >
+        <b-button variant="outline-danger" size="sm" @click="deleteBoard">글삭제</b-button>
       </b-col>
     </b-row>
     <b-row class="mb-1">
@@ -82,8 +76,7 @@ export default {
   computed: {
     ...mapState(memberStore, ["userInfo"]),
     message() {
-      if (this.board.content)
-        return this.board.content.split("\n").join("<br>");
+      if (this.board.content) return this.board.content.split("\n").join("<br>");
       return "";
     },
   },
@@ -112,7 +105,8 @@ export default {
       if (confirm("정말로 삭제?")) {
         this.$router.replace({
           name: "boarddelete",
-          params: { boardno: this.board.boardno },
+          params: { boardno: this.board.id },
+          query: { category: this.board.category },
         });
       }
     },

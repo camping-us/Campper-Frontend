@@ -79,12 +79,17 @@ const memberStore = {
             error.response.status
           );
           commit("SET_IS_VALID_TOKEN", false);
-          await dispatch("tokenRegeneration");
+
+          // 재발급 기능 완성되면 빼기
+          commit("SET_IS_LOGIN", false);
+          commit("SET_USER_INFO", null);
+          console.log(dispatch);
+          // await dispatch("tokenRegeneration");
         }
       );
     },
     // async tokenRegeneration({ commit, state }) {
-    //   console.log("토큰 재발급 >> 기존 토큰 정보 : {}", localStorage.getItem("access-token"));
+    //   console.log("토큰 재발급 >> 기존 토큰 정보 : {}", localStorage.getItem("accessToken"));
     //   await tokenRegeneration(
     //     JSON.stringify(state.userInfo),
     //     ({ data }) => {

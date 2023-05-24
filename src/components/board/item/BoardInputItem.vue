@@ -2,6 +2,13 @@
   <b-row class="mb-1">
     <b-col style="text-align: left">
       <b-form @submit="onSubmit" @reset="onReset">
+        <b-form-select
+          v-model="board.category"
+          :options="options"
+          size="sm"
+          class="mt-3"
+        ></b-form-select>
+
         <b-form-group id="userid-group" label="작성자:" label-for="userid">
           <b-form-input
             id="userid"
@@ -38,16 +45,10 @@
           ></b-form-textarea>
         </b-form-group>
 
-        <b-button
-          type="submit"
-          variant="primary"
-          class="m-1"
-          v-if="this.type === 'register'"
+        <b-button type="submit" variant="primary" class="m-1" v-if="this.type === 'register'"
           >글작성</b-button
         >
-        <b-button type="submit" variant="primary" class="m-1" v-else
-          >글수정</b-button
-        >
+        <b-button type="submit" variant="primary" class="m-1" v-else>글수정</b-button>
         <b-button type="reset" variant="danger" class="m-1">초기화</b-button>
       </b-form>
     </b-col>
@@ -64,9 +65,15 @@ export default {
       board: {
         boardno: 0,
         userName: localStorage.getItem("nickName"),
+        category: "",
         title: "",
         content: "",
       },
+      options: [
+        { value: "", text: "선택하세욧!" },
+        { value: "자유게시판", text: "🎪자유게시판🎪" },
+        { value: "캠핑게시판", text: "⛺캠핑게시판⛺" },
+      ],
       isUserid: false,
     };
   },
@@ -104,9 +111,7 @@ export default {
         ((msg = "제목 입력해주세요"), (err = false), this.$refs.title.focus());
       err &&
         !this.board.content &&
-        ((msg = "내용 입력해주세요"),
-        (err = false),
-        this.$refs.content.focus());
+        ((msg = "내용 입력해주세요"), (err = false), this.$refs.content.focus());
 
       if (!err) alert(msg);
       else this.type === "register" ? this.registBoard() : this.modifyBoard();
@@ -116,13 +121,12 @@ export default {
       this.board.boardno = 0;
       this.board.title = "";
       this.board.content = "";
-      this.moveList();
     },
     registBoard() {
       let param = {
         title: this.board.title,
         content: this.board.content,
-        category: "자유게시판",
+        category: this.board.category,
         images: [],
       };
       writeBoard(
@@ -169,4 +173,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.mt-3 {
+  margin-bottom: 10px;
+}
+</style>
