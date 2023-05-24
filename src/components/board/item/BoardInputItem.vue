@@ -35,15 +35,7 @@
           ></b-form-input>
         </b-form-group>
 
-        <b-form-group id="content-group" label="내용:" label-for="content">
-          <b-form-textarea
-            id="content"
-            v-model="board.content"
-            placeholder="내용 입력..."
-            rows="10"
-            max-rows="15"
-          ></b-form-textarea>
-        </b-form-group>
+        <board-editor style="height: 500px" id="content" @change="change"></board-editor>
 
         <b-button type="submit" variant="primary" class="m-1" v-if="this.type === 'register'"
           >글작성</b-button
@@ -57,17 +49,22 @@
 
 <script>
 import { writeBoard, modifyBoard, getBoard } from "@/api/board.js";
+import BoardEditor from "./BoardEditor.vue";
 
 export default {
   name: "BoardInputItem",
+  components: {
+    BoardEditor,
+  },
   data() {
     return {
+      category: this.$route.query.category,
       board: {
         boardno: 0,
         userName: localStorage.getItem("nickName"),
         category: "",
         title: "",
-        content: "",
+        content: "aaa",
       },
       options: [
         { value: "", text: "선택하세욧!" },
@@ -100,6 +97,10 @@ export default {
     }
   },
   methods: {
+    change(value) {
+      this.board.content = value;
+      console.log("test:" + this.board.content);
+    },
     onSubmit(event) {
       event.preventDefault();
 
@@ -167,7 +168,7 @@ export default {
       );
     },
     moveList() {
-      this.$router.push({ name: "boardlist" });
+      this.$router.push({ name: "boardlist", query: { category: this.category } });
     },
   },
 };

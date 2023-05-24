@@ -29,6 +29,7 @@
               :to="{
                 name: 'boardview',
                 params: { boardno: data.id },
+                query: { category: $route.query.category },
               }"
             >
             </router-link>
@@ -77,7 +78,7 @@ export default {
   },
   methods: {
     moveWrite() {
-      this.$router.push({ name: "boardwrite" });
+      this.$router.push({ name: "boardwrite", query: { category: this.category } });
     },
     viewboard(board) {
       this.$router.push({
