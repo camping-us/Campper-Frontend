@@ -17,6 +17,7 @@
         </div>
       </div>
     </div>
+    <vote-modal />
     <h3 class="underline-green">캠핑장_정보</h3>
     <b-container class="bv-example-row" id="grid">
       <b-row>
@@ -25,15 +26,25 @@
           <div id="info-box" v-if="info">
             <img
               class="campPhoto"
-              v-bind:src="info.firstImageUrl == '' ? defaultImg : info.firstImageUrl"
+              v-bind:src="
+                info.firstImageUrl == '' ? defaultImg : info.firstImageUrl
+              "
               max-width="100%"
             />
             <li>캠핑장_이름: {{ this.info.facltNm }}</li>
-            <li v-if="this.info.lineIntro">캠핑장_한줄소개: {{ this.info.lineIntro }}</li>
-            <li v-if="this.info.addr1">캠핑장_주소: {{ this.info.addr1 + this.info.addr2 }}</li>
+            <li v-if="this.info.lineIntro">
+              캠핑장_한줄소개: {{ this.info.lineIntro }}
+            </li>
+            <li v-if="this.info.addr1">
+              캠핑장_주소: {{ this.info.addr1 + this.info.addr2 }}
+            </li>
             <li>캠핑장_전화번호: {{ this.info.tel }}</li>
-            <li v-if="this.info.resveUrl">캠핑장_예약주소: {{ this.info.resveUrl }}</li>
-            <li v-if="this.info.allar != 0">캠핑장_면적: {{ this.info.allar }}</li>
+            <li v-if="this.info.resveUrl">
+              캠핑장_예약주소: {{ this.info.resveUrl }}
+            </li>
+            <li v-if="this.info.allar != 0">
+              캠핑장_면적: {{ this.info.allar }}
+            </li>
             <li>캠핑장_애완동물출입: {{ this.info.animalCmgCl }}</li>
             <li>캠핑장_화장실갯수: {{ this.info.toiletCo }}</li>
             <li>캠핑장_샤워실갯수: {{ this.info.swrmCo }}</li>
@@ -63,14 +74,22 @@
           <div class="box">
             <div id="subHead">📌투표_결과</div>
             <div id="vote-box" v-if="vote">
-              <li>전체평점: {{ this.calculate(vote.total / vote.voteCount) }}</li>
+              <li>
+                전체평점: {{ this.calculate(vote.total / vote.voteCount) }}
+              </li>
               <li>
                 위치_적합도:
                 {{ this.calculate(vote.location / vote.voteCount) }}
               </li>
-              <li>청결도: {{ this.calculate(vote.cleanliness / vote.voteCount) }}</li>
-              <li>친절도: {{ this.calculate(vote.kindness / vote.voteCount) }}</li>
-              <li>가격_적합도: {{ this.calculate(vote.price / vote.voteCount) }}</li>
+              <li>
+                청결도: {{ this.calculate(vote.cleanliness / vote.voteCount) }}
+              </li>
+              <li>
+                친절도: {{ this.calculate(vote.kindness / vote.voteCount) }}
+              </li>
+              <li>
+                가격_적합도: {{ this.calculate(vote.price / vote.voteCount) }}
+              </li>
               <li>
                 부대시설_총합:
                 {{ this.calculate(vote.facilities / vote.voteCount) }}
@@ -97,9 +116,13 @@ import { viewCamp, registDib } from "@/api/camp.js";
 import { registVote } from "@/api/vote.js";
 import router from "../../router";
 import store from "@/store";
+import VoteModal from "@/components/camp/item/VoteModal";
 
 export default {
   name: "CampInfo",
+  components: {
+    "vote-modal": VoteModal,
+  },
   data() {
     return {
       modalIsOpen: false,
