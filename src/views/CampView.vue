@@ -14,6 +14,7 @@ export default {
 .underline-green {
   text-decoration: #42b983 dashed underline;
   text-decoration-thickness: 3px;
+  text-align: center;
   display: inline-block;
   margin: auto;
 }

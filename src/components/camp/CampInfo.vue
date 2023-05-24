@@ -1,5 +1,22 @@
 <template>
   <div id="app">
+    <div class="black-bg" v-if="modalIsOpen">
+      <div class="white-bg">
+        <div class="vote">
+          <button class="xbox" @click="modalIsOpen = false">❌</button>
+          <div>
+            <h4 class="underline-green">✔️투표창✔️</h4>
+            <li>전체평점:</li>
+            <li>위치_적합도:</li>
+            <li>청결도:</li>
+            <li>친절도:</li>
+            <li>가격_적합도:</li>
+            <li>부대시설_총합:</li>
+          </div>
+          <button @click="submitVote">!투표 완료!</button>
+        </div>
+      </div>
+    </div>
     <h3 class="underline-green">캠핑장_정보</h3>
     <b-container class="bv-example-row" id="grid">
       <b-row>
@@ -7,25 +24,16 @@
           <div id="subHead">📌캠핑장_상세정보</div>
           <div id="info-box" v-if="info">
             <img
-              v-bind:src="
-                info.firstImageUrl == '' ? defaultImg : info.firstImageUrl
-              "
+              class="campPhoto"
+              v-bind:src="info.firstImageUrl == '' ? defaultImg : info.firstImageUrl"
               max-width="100%"
             />
             <li>캠핑장_이름: {{ this.info.facltNm }}</li>
-            <li v-if="this.info.lineIntro">
-              캠핑장_한줄소개: {{ this.info.lineIntro }}
-            </li>
-            <li v-if="this.info.addr1">
-              캠핑장_주소: {{ this.info.addr1 + this.info.addr2 }}
-            </li>
+            <li v-if="this.info.lineIntro">캠핑장_한줄소개: {{ this.info.lineIntro }}</li>
+            <li v-if="this.info.addr1">캠핑장_주소: {{ this.info.addr1 + this.info.addr2 }}</li>
             <li>캠핑장_전화번호: {{ this.info.tel }}</li>
-            <li v-if="this.info.resveUrl">
-              캠핑장_예약주소: {{ this.info.resveUrl }}
-            </li>
-            <li v-if="this.info.allar != 0">
-              캠핑장_면적: {{ this.info.allar }}
-            </li>
+            <li v-if="this.info.resveUrl">캠핑장_예약주소: {{ this.info.resveUrl }}</li>
+            <li v-if="this.info.allar != 0">캠핑장_면적: {{ this.info.allar }}</li>
             <li>캠핑장_애완동물출입: {{ this.info.animalCmgCl }}</li>
             <li>캠핑장_화장실갯수: {{ this.info.toiletCo }}</li>
             <li>캠핑장_샤워실갯수: {{ this.info.swrmCo }}</li>
@@ -36,15 +44,15 @@
               캠핑장_예약방식: {{ this.info.caravInnerFclty }}
             </li>
             <li>캠핑장_찜한_사람수: {{ this.info.dibCnt }}</li>
-          </div>
-          <div id="dibBtn">
-            나도_찜하기:
-            <img
-              src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Red%20Heart.png"
-              alt="Red Heart"
-              width="25"
-              height="25"
-            />
+            <button id="dibBtn" @click="clickDib()">
+              나도_찜하기:
+              <img
+                src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Red%20Heart.png"
+                alt="Red Heart"
+                width="25"
+                height="25"
+              />
+            </button>
           </div>
         </b-col>
         <b-col sm="6">
@@ -55,26 +63,27 @@
           <div class="box">
             <div id="subHead">📌투표_결과</div>
             <div id="vote-box" v-if="vote">
-              <li>
-                전체평점: {{ this.calculate(vote.total / vote.voteCount) }}
-              </li>
+              <li>전체평점: {{ this.calculate(vote.total / vote.voteCount) }}</li>
               <li>
                 위치_적합도:
                 {{ this.calculate(vote.location / vote.voteCount) }}
               </li>
-              <li>
-                청결도: {{ this.calculate(vote.cleanliness / vote.voteCount) }}
-              </li>
-              <li>
-                친절도: {{ this.calculate(vote.kindness / vote.voteCount) }}
-              </li>
-              <li>
-                가격_적합도: {{ this.calculate(vote.price / vote.voteCount) }}
-              </li>
+              <li>청결도: {{ this.calculate(vote.cleanliness / vote.voteCount) }}</li>
+              <li>친절도: {{ this.calculate(vote.kindness / vote.voteCount) }}</li>
+              <li>가격_적합도: {{ this.calculate(vote.price / vote.voteCount) }}</li>
               <li>
                 부대시설_총합:
                 {{ this.calculate(vote.facilities / vote.voteCount) }}
               </li>
+              <button id="dibBtn" @click="clickVote">
+                나도_투표하기:
+                <img
+                  src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Hand%20gestures/Backhand%20Index%20Pointing%20Right%20Light%20Skin%20Tone.png"
+                  alt="Red Heart"
+                  width="25"
+                  height="25"
+                />
+              </button>
             </div>
           </div>
         </b-col>
@@ -84,11 +93,16 @@
 </template>
 
 <script>
-import { viewCamp } from "@/api/camp.js";
+import { viewCamp, registDib } from "@/api/camp.js";
+import { registVote } from "@/api/vote.js";
+import router from "../../router";
+import store from "@/store";
+
 export default {
   name: "CampInfo",
   data() {
     return {
+      modalIsOpen: false,
       map: null,
       info: null,
       vote: null,
@@ -153,11 +167,106 @@ export default {
     calculate(num) {
       return isNaN(num) ? "0.0" : num.toFix(1);
     },
+    checkLogin() {
+      const checkUserInfo = store.getters["memberStore/checkUserInfo"];
+      const checkToken = store.getters["memberStore/checkToken"];
+      let token = localStorage.getItem("accessToken");
+      console.log("로그인 처리 전", checkUserInfo, token);
+
+      if (!checkToken || checkUserInfo === null) {
+        alert("로그인이 필요한 페이지입니다..");
+        // next({ name: "login" });
+        router.push({ name: "login" });
+      }
+    },
+    clickDib() {
+      this.checkLogin();
+      registDib(
+        this.$route.params.campno,
+        ({ data }) => {
+          let msg = "등록 처리시 문제가 발생했습니다.";
+          if (data.isSuccess === true) {
+            msg = "등록이 완료되었습니다.";
+          }
+          alert(msg);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    },
+    clickVote() {
+      // this.checkLogin();
+      this.modalIsOpen = true;
+    },
+    submitVote() {
+      this.checkLogin();
+      let vote = {
+        cleanliness: 5,
+        facilities: 5,
+        kindness: 5,
+        location: 5,
+        price: 5,
+        total: 5,
+      };
+      registVote(
+        this.$route.params.campno,
+        vote,
+        ({ data }) => {
+          let msg = "등록 처리시 문제가 발생했습니다.";
+          if (data.isSuccess === true) {
+            msg = "등록이 완료되었습니다.";
+          }
+          alert(msg);
+          this.modalIsOpen = false;
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    },
   },
 };
 </script>
 
 <style scoped>
+body {
+  margin: 0;
+}
+div {
+  box-sizing: border-box;
+}
+button {
+  border-radius: 3px;
+}
+.black-bg {
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  padding: 20px;
+  z-index: 9999;
+  top: 0px;
+  left: 0px;
+  display: flex;
+}
+.white-bg {
+  margin: auto;
+  width: 40%;
+  /* background: white; */
+  border-radius: 8px;
+  padding: 3px;
+  background-color: #ffffbb;
+}
+.xbox {
+  /* left: 0px; */
+  float: right;
+}
+.vote {
+  border-radius: 10px;
+  border: dashed;
+  padding: 1px;
+}
 li {
   margin-top: 10px;
 }
@@ -175,6 +284,10 @@ li {
   box-shadow: 10px 10px 5px gray;
   background-color: #ffffbb;
   padding: 15px;
+}
+.campPhoto {
+  object-fit: cover;
+  width: 85%;
 }
 #vote-box {
   /* background-color: rgba(255, 255, 255, 0.8); */
