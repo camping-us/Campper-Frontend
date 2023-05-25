@@ -1,13 +1,9 @@
 <template>
   <b-list-group-item class="flex-column align-items-start">
-    <div class="d-flex w-100 justify-content-between">
+    <div class="d-flex w-100 justify-content-flex-start">
       <h5 class="mb-1">{{ commentObj.userName }}</h5>
-      <small class="text-muted" v-if="userInfo.id === commentObj.userId">
-        <b-button variant="outline-info" size="sm" @click="modifyCommentFunc">수정</b-button>
-        <b-button variant="outline-danger" size="sm" @click="deleteCommentFunc">삭제</b-button>
-      </small>
-      <small class="text-right">
-        좋아요 수: {{ commentObj.likeCnt }}
+      <small class="text-muted">{{ createdAt }}</small>
+      <small class="text-right" style="float: right; margin-left: auto">
         <img
           src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Heart%20on%20Fire.png"
           alt="Heart on Fire"
@@ -16,6 +12,7 @@
           v-on:click="heart"
           style="cursor: pointer"
         />
+        {{ commentObj.likeCnt }}
       </small>
     </div>
 
@@ -23,7 +20,10 @@
       {{ commentObj.content }}
     </p>
 
-    <small class="text-muted">시간: {{ createdAt }}</small>
+    <small class="text-muted" style="float: right" v-if="userInfo.id === commentObj.userId">
+      <b-button variant="outline-info" size="sm" @click="modifyCommentFunc">수정</b-button>
+      <b-button variant="outline-danger" size="sm" @click="deleteCommentFunc">삭제</b-button>
+    </small>
   </b-list-group-item>
 </template>
 <script>
