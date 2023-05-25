@@ -2,7 +2,7 @@
   <div class="black-bg" v-if="this.modalIsOpen">
     <div class="white-bg">
       <div class="vote">
-        <div class="xbox"><button>❌</button></div>
+        <div class="xbox" @click="closeVote"><button>❌</button></div>
         <div display="margin:10px,auto,0px">
           <h4 class="underline-green" display="text-align:center">✔️투표창✔️</h4>
           <div display="margin-top:10px">
@@ -52,6 +52,7 @@ export default {
   },
   data() {
     return {
+      isClose: false,
       selected: [0, 0, 0, 0, 0, 0],
       options: [
         { item: 5, name: "최고!(5)" },
@@ -87,6 +88,14 @@ export default {
           console.log(error);
         }
       );
+    },
+    closeVote() {
+      this.isClose = !this.isClose;
+    },
+  },
+  watch: {
+    isClose() {
+      this.$emit("close", this.isClose);
     },
   },
 };
