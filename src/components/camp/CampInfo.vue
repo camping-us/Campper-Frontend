@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div display="text-align:center"><vote-modal :modalIsOpen="modalIsOpen" /></div>
+    <div display="text-align:center"><vote-modal @close="close" :modalIsOpen="modalIsOpen" /></div>
 
     <h3 class="underline-green">캠핑장_정보</h3>
     <b-container class="bv-example-row" id="grid">
@@ -117,6 +117,9 @@ export default {
     );
   },
   methods: {
+    close() {
+      this.modalIsOpen = !this.modalIsOpen;
+    },
     calculate(num) {
       return isNaN(num) ? "0.0" : num.toFixed(1);
     },
