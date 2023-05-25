@@ -2,12 +2,7 @@
   <b-row class="mb-1">
     <b-col style="text-align: left">
       <b-form @submit="onSubmit" @reset="onReset">
-        <b-form-select
-          v-model="board.category"
-          :options="options"
-          size="sm"
-          class="mt-3"
-        ></b-form-select>
+        <b-form-select v-model="category" :options="options" size="sm" class="mt-3"></b-form-select>
 
         <b-form-group id="userid-group" label="작성자:" label-for="userid">
           <b-form-input
@@ -35,7 +30,13 @@
           ></b-form-input>
         </b-form-group>
 
-        <board-editor style="height: 500px" id="content" @change="change"></board-editor>
+        <board-editor
+          v-model="board.content"
+          :pContent="board.content"
+          style="height: 500px"
+          id="content"
+          @change="change"
+        ></board-editor>
 
         <b-button type="submit" variant="primary" class="m-1" v-if="this.type === 'register'"
           >글작성</b-button
@@ -50,6 +51,7 @@
 <script>
 import { writeBoard, modifyBoard, getBoard } from "@/api/board.js";
 import BoardEditor from "./BoardEditor.vue";
+import { convertFileData } from "../s3/convert";
 
 export default {
   name: "BoardInputItem",
@@ -58,13 +60,13 @@ export default {
   },
   data() {
     return {
-      category: this.$route.query.category,
+      category: this.$route.query.category == "FREE_BOARD" ? "자유게시판" : "캠핑게시판",
       board: {
         boardno: 0,
         userName: localStorage.getItem("nickName"),
         category: "",
         title: "",
-        content: "aaa",
+        content: "",
       },
       options: [
         { value: "", text: "선택하세욧!" },
@@ -77,7 +79,8 @@ export default {
   props: {
     type: { type: String },
   },
-  created() {
+  created() {},
+  mounted() {
     if (this.type === "modify") {
       let param = this.$route.params.boardno;
       getBoard(
@@ -87,19 +90,20 @@ export default {
           this.board.userName = data.data.userName;
           this.board.title = data.data.title;
           this.board.content = data.data.content;
+          this.board.category = data.data.category;
           this.board = data.data;
         },
         (error) => {
           console.log(error);
         }
       );
+
       this.isUserid = true;
     }
   },
   methods: {
     change(value) {
       this.board.content = value;
-      console.log("test:" + this.board.content);
     },
     onSubmit(event) {
       event.preventDefault();
@@ -124,26 +128,32 @@ export default {
       this.board.content = "";
     },
     registBoard() {
-      let param = {
+      var param = {
         title: this.board.title,
-        content: this.board.content,
-        category: this.board.category,
+        content: "",
+        category: this.category,
         images: [],
       };
-      writeBoard(
-        param,
-        ({ data }) => {
-          let msg = "등록 처리시 문제가 발생했습니다.";
-          if (data.isSuccess === true) {
-            msg = "등록이 완료되었습니다.";
-          }
-          alert(msg);
-          this.moveList();
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+
+      convertFileData(this.board.content)
+        .then(function (n) {
+          param.content = n;
+          writeBoard(
+            param,
+            ({ data }) => {
+              let msg = "등록 처리시 문제가 발생했습니다.";
+              if (data.isSuccess === true) {
+                msg = "등록이 완료되었습니다.";
+              }
+              alert(msg);
+            },
+            (error) => {
+              console.log(error);
+            }
+          );
+        })
+        .then(this.moveList())
+        .catch((n) => console.log("error:" + n));
     },
     modifyBoard() {
       let param = {
@@ -168,7 +178,7 @@ export default {
       );
     },
     moveList() {
-      this.$router.push({ name: "boardlist", query: { category: this.category } });
+      this.$router.push({ name: "boardlist", query: { category: this.$route.query.category } });
     },
   },
 };
