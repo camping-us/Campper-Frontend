@@ -126,6 +126,7 @@ export default {
         this.$route.params.campno,
         ({ data }) => {
           this.$printSaveStatus(data.isSuccess);
+          this.$router.go(this.$route.currentRoute);
         },
         (error) => {
           console.log(error);

@@ -1,6 +1,6 @@
 <template>
   <b-container class="bv-example-row mt-3 text-center">
-    <h3 class="underline-steelblue">캠퍼</h3>
+    <h3 class="underline-steelblue"></h3>
     <router-view></router-view>
   </b-container>
 </template>

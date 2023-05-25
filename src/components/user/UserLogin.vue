@@ -7,8 +7,8 @@
     </b-row>
     <b-row>
       <b-col></b-col>
-      <b-col cols="8">
-        <b-card class="text-center mt-3" style="max-width: 40rem" align="left">
+      <b-col cols="8" style="text-align: -webkit-center">
+        <b-card class="text-center mt-3" style="max-width: 40rem" text-align="center">
           <b-form class="text-left">
             <b-alert show variant="danger" v-if="isLoginError"
               >아이디 또는 비밀번호를 확인하세요.</b-alert

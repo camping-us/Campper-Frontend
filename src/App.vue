@@ -51,4 +51,11 @@ nav a {
 nav a.router-link-exact-active {
   color: #42b983;
 }
+.underline-green {
+  text-decoration: #42b983 dashed underline;
+  text-decoration-thickness: 3px;
+  text-align: center;
+  display: inline-block;
+  margin: auto;
+}
 </style>

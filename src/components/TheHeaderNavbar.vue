@@ -16,24 +16,32 @@
         style="justify-content: end; margin-right: 20px"
       ></b-navbar-toggle>
 
-      <b-collapse
-        id="nav-collapse"
-        is-nav
-        style="justify-content: end; margin-right: 100px"
-      >
+      <b-collapse id="nav-collapse" is-nav style="justify-content: end; margin-right: 100px">
         <!-- after login -->
         <b-navbar-nav class="ml-auto" v-if="userInfo">
           <b-nav-item class="align-self-center">
-            {{ userInfo.nickName }}님 환영합니다.
-          </b-nav-item>
-          <b-nav-item class="align-self-center">
-            <router-link :to="{ name: 'mypage' }" class="link align-self-center"
-              >내정보보기</router-link
+            <router-link
+              :to="{ name: 'mypage' }"
+              class="link align-self-center"
+              style="color: aqua"
             >
+              {{ userInfo.nickName }}</router-link
+            >
+            님 환영합니다.
           </b-nav-item>
-          <b-nav-item class="align-self-center link" @click="onClickLogout"
-            >로그아웃</b-nav-item
-          >
+          <b-navbar-nav class="ml-auto">
+            <b-nav-item-dropdown right style="margin-right: 20px">
+              <!-- before login -->
+              <template #button-content>
+                <em>캠퍼</em>
+              </template>
+              <b-dropdown-item href="#">
+                <div @click="onClickLogout">
+                  <strong style="text-decoration: underline">로그아웃</strong>
+                </div>
+              </b-dropdown-item>
+            </b-nav-item-dropdown>
+          </b-navbar-nav>
         </b-navbar-nav>
         <b-navbar-nav class="ml-auto" v-else>
           <b-nav-item-dropdown right style="margin-right: 20px">
