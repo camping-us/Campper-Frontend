@@ -41,9 +41,10 @@
           </div>
         </b-col>
         <b-col sm="6">
-          <div class="box" v-if="info != null">
+          <div class="box">
             <div id="subHead">📌캠핑장_지도</div>
             <sub-map
+              v-if="info != null"
               :facltNm="this.info.facltNm"
               :mapY="this.info.mapY"
               :mapX="this.info.mapX"
@@ -107,7 +108,7 @@ export default {
       ({ data }) => {
         this.info = data.data.info;
         this.vote = data.data.vote;
-        console.log(this.info);
+        console.log(this.info.mapY, this.info.mapX);
       },
       (error) => {
         console.log(error);
@@ -116,7 +117,6 @@ export default {
   },
   methods: {
     calculate(num) {
-      console.log(num);
       return isNaN(num) ? "0.0" : num.toFixed(1);
     },
     clickDib() {
