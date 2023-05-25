@@ -19,7 +19,7 @@
     <b-row class="mb-1">
       <b-col>
         <b-card
-          :header-html="`<h3>${board.id}.
+          :header-html="`<h3>
             ${board.title} </h3>
             <div>
               <h6>${board.userName}</h6>
@@ -33,7 +33,6 @@
             <div v-html="message"></div>
           </b-card-body>
           <b-card-body class="text-right">
-            좋아요 수: {{ board.likeCnt }}
             <img
               src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Heart%20on%20Fire.png"
               alt="Heart on Fire"
@@ -42,6 +41,7 @@
               v-on:click="heart"
               style="cursor: pointer"
             />
+            {{ board.likeCnt }}
           </b-card-body>
         </b-card>
       </b-col>
