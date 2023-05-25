@@ -17,17 +17,21 @@ export default {
   },
   created() {},
   mounted() {
+    /*global kakao */
     if (window.kakao && window.kakao.maps) {
       this.initMap();
+      this.loadMarker();
     } else {
       const script = document.createElement("script");
-      script.onload = () => kakao.maps.load(this.initMap);
+      script.onload = () =>
+        kakao.maps.load(() => {
+          this.initMap();
+          this.loadMarker();
+        });
       script.src =
-        "http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=16cd299925f3e1a7ff0b522249306cfd&libraries=clusterer";
+        "http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=16cd299925f3e1a7ff0b522249306cfd&autoload=false";
       document.head.appendChild(script);
     }
-
-    this.loadMarker();
   },
   methods: {
     initMap() {
@@ -41,7 +45,6 @@ export default {
     },
     loadMarker() {
       console.log(this.mapY, this.mapX);
-      this.map.relayout();
       var markerImage = new kakao.maps.MarkerImage(
         "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Hand%20gestures/Backhand%20Index%20Pointing%20Down%20Light%20Skin%20Tone.png",
         new kakao.maps.Size(60, 60)

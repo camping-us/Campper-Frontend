@@ -42,10 +42,7 @@
     "parserOptions": {
       "parser": "@babel/eslint-parser"
     },
-    "rules": {},
-    "globals": {
-      "kakao": false
-    }
+    "rules": {}
   },
   "browserslist": [
     "> 1%",

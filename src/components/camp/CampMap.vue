@@ -45,6 +45,7 @@ export default {
     );
   },
   mounted() {
+    /*global kakao */
     if (window.kakao && window.kakao.maps) {
       this.initMap();
     } else {
@@ -68,12 +69,6 @@ export default {
       this.map.setMapTypeId(kakao.maps.MapTypeId.ROADMAP);
     },
     loadMarker() {
-      var clusterer = new kakao.maps.MarkerClusterer({
-        map: this.map, // 마커들을 클러스터로 관리하고 표시할 지도 객체
-        averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정
-        minLevel: 11, // 클러스터 할 최소 지도 레벨
-        disableClickZoom: true, // 클러스터 마커를 클릭했을 때 지도가 확대되지 않도록 설정한다
-      });
       var markerImage = new kakao.maps.MarkerImage(
         "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Animals/Deciduous%20Tree.png",
         new kakao.maps.Size(38, 38)
@@ -87,7 +82,6 @@ export default {
           image: markerImage,
         });
         this.markers.push(marker);
-        // marker.setMap(this.map);
         let cid = this.positions[i].id;
         kakao.maps.event.addListener(marker, "click", this.markerClick(cid));
         // kakao.maps.event.addListener(marker, "mouseout", makeOutListener(infowindow));
@@ -95,8 +89,6 @@ export default {
         //   console.log(cid);
         // });
       }
-
-      clusterer.addMarkers(this.markers);
     },
     markerClick(id) {
       return function () {

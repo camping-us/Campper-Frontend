@@ -43,12 +43,13 @@
         <b-col sm="6">
           <div class="box">
             <div id="subHead">📌캠핑장_지도</div>
-            <sub-map
-              v-if="info != null"
-              :facltNm="this.info.facltNm"
-              :mapY="this.info.mapY"
-              :mapX="this.info.mapX"
-            ></sub-map>
+            <div v-if="info != null">
+              <sub-map
+                :facltNm="this.info.facltNm"
+                :mapY="this.info.mapY"
+                :mapX="this.info.mapX"
+              ></sub-map>
+            </div>
           </div>
           <div class="box">
             <div id="subHead">📌투표_결과</div>
@@ -102,7 +103,7 @@ export default {
         "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Camping.png",
     };
   },
-  created() {
+  mounted() {
     viewCamp(
       this.$route.params.campno,
       ({ data }) => {
