@@ -98,6 +98,7 @@ export default {
       this.$router.replace({
         name: "boardmodify",
         params: { boardno: this.board.id },
+        query: { category: this.board.category },
       });
       //   this.$router.push({ path: `/board/modify/${this.board.boardno}` });
     },

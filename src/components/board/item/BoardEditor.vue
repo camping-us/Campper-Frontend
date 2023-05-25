@@ -5,7 +5,7 @@
       ref="myTextEditor"
       style="height: 400px"
       :disabled="false"
-      :value="content"
+      :value="pContent"
       :options="editorOption"
       @change="onEditorChange"
       @blur="onEditorBlur($event)"
@@ -33,6 +33,10 @@ export default {
   components: {
     quillEditor,
   },
+  props: {
+    pContent: String,
+  },
+  created() {},
   data() {
     return {
       editorOption: {
@@ -67,15 +71,19 @@ export default {
       this.content = value.html;
     }, 466),
     onEditorBlur(editor) {
-      this.$emit("change", this.content);
       console.log("editor blur!", editor);
     },
     onEditorFocus(editor) {
-      this.$emit("change", this.content);
       console.log("editor focus!", editor);
     },
     onEditorReady(editor) {
+      this.content = this.pContent;
       console.log("editor ready!", editor);
+    },
+  },
+  watch: {
+    content() {
+      this.$emit("change", this.content);
     },
   },
   computed: {
@@ -88,6 +96,7 @@ export default {
   },
   mounted() {
     console.log("this is Quill instance:", this.editor);
+    this.content = this.pContent;
   },
 };
 </script>
