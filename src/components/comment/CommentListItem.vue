@@ -16,18 +16,30 @@
       </small>
     </div>
 
-    <p class="mb-1">
+    <b-form-textarea
+      v-if="isMod"
+      id="content"
+      v-model="content"
+      placeholder="내용 입력..."
+      rows="3"
+      max-rows="6"
+    ></b-form-textarea>
+    <p class="mb-1" v-else>
       {{ commentObj.content }}
     </p>
 
     <small class="text-muted" style="float: right" v-if="userInfo.id === commentObj.userId">
-      <b-button variant="outline-info" size="sm" @click="modifyCommentFunc">수정</b-button>
+      <b-button v-if="isMod" variant="outline-info" size="sm" @click="doneModifyCommentFunc"
+        >완료</b-button
+      >
+
+      <b-button v-else variant="outline-info" size="sm" @click="modifyCommentFunc">수정</b-button>
       <b-button variant="outline-danger" size="sm" @click="deleteCommentFunc">삭제</b-button>
     </small>
   </b-list-group-item>
 </template>
 <script>
-import { modifyComment, deleteComment } from "@/api/comment.js";
+import { deleteComment, modifyComment } from "@/api/comment.js";
 import { commentLike } from "@/api/comment-like.js";
 import { mapState } from "vuex";
 
@@ -41,6 +53,8 @@ export default {
   components: {},
   data() {
     return {
+      content: this.commentObj.content,
+      isMod: false,
       createdAt: `${this.commentObj.createdAt[0]}-${this.commentObj.createdAt[1]}-${this.commentObj.createdAt[2]}`,
     };
   },
@@ -49,12 +63,14 @@ export default {
   },
   methods: {
     modifyCommentFunc() {
+      this.isMod = true;
+    },
+    doneModifyCommentFunc() {
+      this.isMod = false;
       let param = {
-        commentId: this.commentObj.id,
-        content: this.commentObj.content,
+        content: this.content,
       };
-
-      modifyComment(param, ({ data }) => {
+      modifyComment(this.commentObj.id, param, ({ data }) => {
         let msg = "등록 처리시 문제가 발생했습니다.";
         if (data.isSuccess === true) {
           msg = "등록이 완료되었습니다.";
