@@ -16,24 +16,16 @@
         style="justify-content: end; margin-right: 20px"
       ></b-navbar-toggle>
 
-      <b-collapse
-        id="nav-collapse"
-        is-nav
-        style="justify-content: end; margin-right: 100px"
-      >
+      <b-collapse id="nav-collapse" is-nav style="justify-content: end; margin-right: 100px">
         <!-- after login -->
         <b-navbar-nav class="ml-auto" v-if="userInfo">
-          <b-nav-item class="align-self-center">
-            {{ userInfo.nickName }}님 환영합니다.
-          </b-nav-item>
+          <b-nav-item class="align-self-center"> {{ userInfo.nickName }}님 환영합니다. </b-nav-item>
           <b-nav-item class="align-self-center">
             <router-link :to="{ name: 'mypage' }" class="link align-self-center"
               >내정보보기</router-link
             >
           </b-nav-item>
-          <b-nav-item class="align-self-center link" @click="onClickLogout"
-            >로그아웃</b-nav-item
-          >
+          <b-nav-item class="align-self-center link" @click="onClickLogout">로그아웃</b-nav-item>
         </b-navbar-nav>
         <b-navbar-nav class="ml-auto" v-else>
           <b-nav-item-dropdown right style="margin-right: 20px">
@@ -116,7 +108,7 @@ export default {
       //+ satate에 isLogin, userInfo 정보 변경)
       // this.$store.dispatch("userLogout", this.userInfo.userid);
       this.userLogout();
-      // if (this.$route.path != "/") this.$router.push({ name: "main" });
+      if (this.$route.path != "/") this.$router.push({ name: "home" });
     },
   },
 };
