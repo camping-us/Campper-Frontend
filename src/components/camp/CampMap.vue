@@ -33,10 +33,7 @@ export default {
               this.datas[i].lineIntro +
               "\n평점: " +
               this.retNum(this.datas[i].total / this.datas[i].voteCnt),
-            latlng: new kakao.maps.LatLng(
-              this.datas[i].mapY,
-              this.datas[i].mapX
-            ),
+            latlng: new kakao.maps.LatLng(this.datas[i].mapY, this.datas[i].mapX),
           };
           this.positions.push(position);
         }
@@ -52,6 +49,7 @@ export default {
       this.initMap();
     } else {
       const script = document.createElement("script");
+
       script.onload = () => kakao.maps.load(this.initMap);
       script.src =
         "http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=16cd299925f3e1a7ff0b522249306cfd&libraries=clusterer";

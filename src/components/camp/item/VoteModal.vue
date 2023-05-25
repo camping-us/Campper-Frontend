@@ -1,34 +1,36 @@
 <template>
-  <div class="black-bg" v-if="modalIsOpen">
+  <div class="black-bg" v-if="this.modalIsOpen">
     <div class="white-bg">
       <div class="vote">
-        <button class="xbox" @click="modalIsOpen = false">❌</button>
-        <div>
-          <h4 class="underline-green">✔️투표창✔️</h4>
-          <li display="line-block">
-            전체평점:
-            <b-form-radio-group
-              display="inline-block"
-              :options="ratingOptions"
-              class="mb-3"
-              value-field="item"
-              text-field="name"
-            ></b-form-radio-group>
-          </li>
-          <li>
-            위치_적합도:
-            <b-form-radio-group
-              :options="ratingOptions"
-              class="mb-3"
-              value-field="item"
-              text-field="name"
-            ></b-form-radio-group>
-          </li>
-          <li>청결도:</li>
-          <li>친절도:</li>
-          <li>가격_적합도:</li>
-          <li>부대시설_총합:</li>
-          <div class="mt-3"></div>
+        <div class="xbox"><button>❌</button></div>
+        <div display="margin:10px,auto,0px">
+          <h4 class="underline-green" display="text-align:center">✔️투표창✔️</h4>
+          <div display="margin-top:10px">
+            <li>
+              전체평점:
+              <rating-radio :selected="selected[0]" @input="selected[0] = $event"></rating-radio>
+            </li>
+            <li>
+              위치_적합도:
+              <rating-radio :selected="selected[1]" @input="selected[1] = $event"></rating-radio>
+            </li>
+            <li>
+              청결도:
+              <rating-radio :selected="selected[2]" @input="selected[2] = $event"></rating-radio>
+            </li>
+            <li>
+              친절도:
+              <rating-radio :selected="selected[3]" @input="selected[3] = $event"></rating-radio>
+            </li>
+            <li>
+              가격_적합도:
+              <rating-radio :selected="selected[4]" @input="selected[4] = $event"></rating-radio>
+            </li>
+            <li>
+              부대시설_총합:
+              <rating-radio :selected="selected[5]" @input="selected[5] = $event"></rating-radio>
+            </li>
+          </div>
         </div>
         <button @click="submitVote">!투표 완료!</button>
       </div>
@@ -38,20 +40,25 @@
 
 <script>
 import { registVote } from "@/api/vote.js";
-import { checkLogin, printSaveStatus } from "@/commonGlobal/global.js";
+import RatingRadio from "@/components/camp/item/RatingRadio";
 
 export default {
   name: "VoteModal",
-  mixins: [checkLogin, printSaveStatus],
+  components: {
+    RatingRadio,
+  },
+  props: {
+    modalIsOpen: Boolean,
+  },
   data() {
     return {
-      modalIsOpen: false,
-      ratingOptions: [
-        { value: 5, name: "최고!(5)" },
-        { value: 4, name: "좋아!(4)" },
-        { value: 3, name: "보통..(3)" },
-        { value: 2, name: "좀별루..(2)" },
-        { value: 1, name: "별루.(1)" },
+      selected: [0, 0, 0, 0, 0, 0],
+      options: [
+        { item: 5, name: "최고!(5)" },
+        { item: 4, name: "좋아!(4)" },
+        { item: 3, name: "보통..(3)" },
+        { item: 2, name: "좀별루..(2)" },
+        { item: 1, name: "별루.(1)" },
       ],
     };
   },
@@ -59,19 +66,22 @@ export default {
     submitVote() {
       this.$checkLogin();
       let vote = {
-        cleanliness: 5,
-        facilities: 5,
-        kindness: 5,
-        location: 5,
-        price: 5,
-        total: 5,
+        cleanliness: this.selected[2],
+        facilities: this.selected[5],
+        kindness: this.selected[3],
+        location: this.selected[1],
+        price: this.selected[4],
+        total: this.selected[0],
       };
+      console.log(this.selected);
       registVote(
         this.$route.params.campno,
         vote,
         ({ data }) => {
           this.$printSaveStatus(data.isSuccess);
-          this.modalIsOpen = false;
+          console.log(data);
+          this.$router.go(this.$route.currentRoute);
+          // this.modalIsOpen = false;
         },
         (error) => {
           console.log(error);
@@ -82,7 +92,11 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+li {
+  margin-bottom: 7px;
+  display: inline-block;
+}
 .black-bg {
   width: 100%;
   height: 100%;
@@ -96,13 +110,14 @@ export default {
 }
 .white-bg {
   margin: auto;
-  width: 40%;
+  width: 450px;
   border-radius: 8px;
   padding: 3px;
   background-color: #ffffbb;
 }
 .xbox {
-  float: right;
+  display: flex;
+  justify-content: flex-end;
 }
 .vote {
   border-radius: 10px;
