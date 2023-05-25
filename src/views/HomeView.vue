@@ -1,26 +1,27 @@
 <template>
   <b-container class="bv-example-row">
-      <b-row>
-        <b-col>
-          <main-carousel></main-carousel>
-        </b-col>
-        <b-col>
-          <main-card></main-card>
-        </b-col>
-      </b-row>
-    </b-container>
+    <b-row>
+      <b-col>
+        <main-fire></main-fire>
+        <main-campper></main-campper>
+        <main-developer></main-developer>
+      </b-col>
+    </b-row>
+  </b-container>
 </template>
 
 <script>
 // @ is an alias to /src
-import MainCarousel from "@/components/main/MainCarousel.vue";
-import MainCard from "@/components/main/MainCard.vue";
+import MainFire from "@/components/main/MainFire.vue";
+import MainCampper from "@/components/main/MainCampper.vue";
+import MainDeveloper from "@/components/main/MainDeveloper.vue";
 
 export default {
   name: "HomeView",
   components: {
-    MainCarousel,
-    MainCard,
+    MainFire,
+    MainCampper,
+    MainDeveloper,
   },
 };
 </script>

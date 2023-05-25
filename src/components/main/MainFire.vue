@@ -1,0 +1,10 @@
+<template>
+  <div>
+    <img
+      src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Fire.png"
+      alt="Fire"
+      width="500"
+      height="500"
+    />
+  </div>
+</template>
