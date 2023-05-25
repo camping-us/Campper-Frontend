@@ -10,4 +10,9 @@ function viewCamp(campno, success, fail) {
   api.get(`/places/${campno}`).then(success).catch(fail);
 }
 
-export { listCamp, viewCamp };
+function registDib(campno, success, fail) {
+  api.defaults.headers.common["Authorization"] = `Bearer ${localStorage.getItem("accessToken")}`;
+  api.post(`/camp-dibs/${campno}`).then(success).catch(fail);
+}
+
+export { listCamp, viewCamp, registDib };

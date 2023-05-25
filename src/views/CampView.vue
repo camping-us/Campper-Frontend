@@ -12,10 +12,10 @@ export default {
 
 <style>
 .underline-green {
-  text-decoration: #42b983 wavy underline;
+  text-decoration: #42b983 dashed underline;
   text-decoration-thickness: 3px;
+  text-align: center;
   display: inline-block;
   margin: auto;
-  /* background: linear-gradient(180deg, rgba(255, 255, 255, 0) 70%, #42b983 30%); */
 }
 </style>
