@@ -1,4 +1,4 @@
-# Enjoytrip*Final*서울10*전수민*한상우
+# ⛺ Campper-Frontend
 
 <br/>
 
@@ -48,47 +48,39 @@
   <img src="assets/usecase.png">
 </p>
 
-<br>
+<br/>
 
-## 🏢 ClassDiagram
+## ⚙️ Skills
+<div align="center"> 
 
-<br>
+ ![Vue](https://img.shields.io/badge/Vue.js-35495E?style=for-the-badge&logo=vuedotjs&logoColor=4FC08D) ![css](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white) ![javascript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
+   ![npm](https://img.shields.io/badge/NPM-CB3837?style=for-the-badge&logo=npm&logoColor=black) ![ENV](https://img.shields.io/badge/ENV-ECD53F?style=for-the-badge&logo=.ENV&logoColor=black)
+<br/>
+  
+</div>
+  
 
-<p align="center">  
-  <img src="assets/classdiagram.png">
-</p>
+## 💻 Developers
 
-<br>
-
-## 🏢 ERD
-
-<br>
-
-<p align="center">  
-  <img src="assets/erd.png">
-</p>
-
-<br>
-
-## 🔧 Tech stack
-
-<br>
-
-| 분류     | 기술                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
-| :------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| CI/CD    | ![GithubActions](https://img.shields.io/badge/github%20actions-2088FF?style=for-the-badge&logo=githubactions&logoColor=white) ![Docker](https://img.shields.io/badge/docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)                                                                                                                                                                                                                                                                                        |
-| 개발환경 | ![EC2](https://img.shields.io/badge/ec2-FF9900?style=for-the-badge&logo=amazonec2&logoColor=white)                                                                                                                                                                                                                                                                                                                                                                                                                         |
-| Frontend | ![Vue](https://img.shields.io/badge/Vue.js-35495E?style=for-the-badge&logo=vuedotjs&logoColor=4FC08D) ![css](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white) ![javascript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)                                                                                                                                                                                                     |
-| Backend  | ![Java](https://img.shields.io/badge/java-007396?style=for-the-badge&logo=java&logoColor=white) ![SpringBoot](https://img.shields.io/badge/spring%20boot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white) ![MyBatis](https://img.shields.io/badge/mybatis-000000?style=for-the-badge&logo=mybatis&logoColor=white) ![Gradle](https://img.shields.io/badge/gradle-02303A?style=for-the-badge&logo=gradle&logoColor=white) ![Swagger](https://img.shields.io/badge/swagger-gray?style=for-the-badge&logo=swagger) |
-| DB       | ![MySQL](https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white) ![RDS](https://img.shields.io/badge/rds-527FFF?style=for-the-badge&logo=amazonrds&logoColor=white) ![Redis](https://img.shields.io/badge/Redis-DC382D?style=for-the-badge&logo=Redis&logoColor=white)                                                                                                                                                                                                                   |
-
-<br>
-
-## **👨‍👨‍👧‍👦 Members**
-
-<br>
-
-| 이름   | 소개페이지                                        |
-| ------ | ------------------------------------------------- |
-| 전수민 | [개인 리포로 이동](https://github.com/squirMM)    |
-| 한상우 | [개인 리포로 이동](https://github.com/sktkddn777) |
+<table>
+    <tr align="center">
+        <td><B>FrontEnd</B></td>
+        <td><B>FrontEnd</B></td>
+    </tr>
+    <tr align="center">
+        <td><B>전수민</B></td>
+        <td><B>한상우</B></td>
+    </tr>
+    <tr align="center">
+        <td>
+            <img src="https://github.com/squirMM.png?size=100">
+            <br>
+            <a href="https://github.com/squirMM"><I>squirMM</I></a>
+        </td>
+        <td>
+            <img src="https://github.com/sktkddn777.png?size=100">
+            <br>
+            <a href="https://github.com/sktkddn777"><I>sktkddn777</I></a>
+        </td>
+    </tr>
+</table>
