@@ -17,26 +17,9 @@
 <br/>
 
 ## 🤖Pages
-
-| Main                                                  | Login                                                  |
-| ----------------------------------------------------- | ------------------------------------------------------ |
-| <img src="assets/main.png" width="500" height="250"/> | <img src="assets/login.png" width="500" height="250"/> |
-
-| SignUp                                                  | MyPage                                                  |
-| ------------------------------------------------------- | ------------------------------------------------------- |
-| <img src="assets/signup.png" width="500" height="250"/> | <img src="assets/mypage.png" width="500" height="250"/> |
-
-| Camping                                                  | Camping-detail                                                  |
-| -------------------------------------------------------- | --------------------------------------------------------------- |
-| <img src="assets/camping.png" width="500" height="250"/> | <img src="assets/camping-detail.png" width="500" height="250"/> |
-
-| CampingVote                                                   | Board                                                  |
-| ------------------------------------------------------------- | ------------------------------------------------------ |
-| <img src="assets/camping-vote.png" width="500" height="250"/> | <img src="assets/board.png" width="500" height="250"/> |
-
-| BoardWrite                                                   | BoardDetail                                                   |
-| ------------------------------------------------------------ | ------------------------------------------------------------- |
-| <img src="assets/board-write.png" width="500" height="250"/> | <img src="assets/board-detail.png" width="500" height="250"/> |
+![캠퍼-010 (1)](https://github.com/camping-us/Campper-Frontend/assets/62806067/4dd45428-0c61-49cd-b004-4baa34832c00)
+![011](https://github.com/camping-us/Campper-Frontend/assets/62806067/0ca78633-3c89-4b3d-97f4-f4b18c8fccbe)
+![012](https://github.com/camping-us/Campper-Frontend/assets/62806067/4d0224ec-2474-4924-90c2-7c2259afdd97)
 
 <br>
 
