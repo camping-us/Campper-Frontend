@@ -1,16 +1,38 @@
 <template>
   <div id="app">
-    <nav>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </nav>
-    <router-view/>
+    <the-header-navbar></the-header-navbar>
+    <router-view></router-view>
   </div>
 </template>
 
+<script>
+import TheHeaderNavbar from "@/components/TheHeaderNavbar";
+
+export default {
+  name: "App",
+  components: {
+    TheHeaderNavbar,
+  },
+};
+</script>
+
 <style>
+@font-face {
+  font-family: "bitbit";
+  src: url("//cdn.df.nexon.com/img/common/font/DNFBitBit-Regular.woff"),
+    url("//cdn.df.nexon.com/img/common/font/DNFBitBit-Regular.woff2");
+}
+
+@font-face {
+  font-family: "DungGeunMo";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/DungGeunMo.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: DungGeunMo, Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
@@ -28,5 +50,12 @@ nav a {
 
 nav a.router-link-exact-active {
   color: #42b983;
+}
+.underline-green {
+  text-decoration: #42b983 dashed underline;
+  text-decoration-thickness: 3px;
+  text-align: center;
+  display: inline-block;
+  margin: auto;
 }
 </style>
