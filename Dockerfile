@@ -6,8 +6,8 @@ RUN npm install
 COPY . .
 RUN npm run build
 
-# Production Stage
-FROM nginx:stable-alpine
-COPY --from=build-stage /app/dist /usr/share/nginx/html
+# # Production Stage
+# FROM nginx:stable-alpine
+# COPY --from=build-stage /app/dist /usr/share/nginx/html
 EXPOSE 3000
 ENTRYPOINT ["nginx", "-g", "daemon off;"]
