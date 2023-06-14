@@ -1,5 +1,5 @@
 # Build Stage
-FROM node:19.0
+FROM node:19.0 as build-stage
 WORKDIR /app
 COPY package.json .
 
