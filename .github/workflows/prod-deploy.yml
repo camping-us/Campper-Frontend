@@ -1,7 +1,7 @@
 name: Push Image to DockerHub[Frontend]
 on:
   push:
-    branches: [dev]
+    branches: [main]
     # Publish semver tags as releases.
     # tags: ['v*.*.*']
 
