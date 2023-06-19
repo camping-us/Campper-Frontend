@@ -1,5 +1,4 @@
 import jwtDecode from "jwt-decode";
-// import router from "@/router";
 import { login, reissue, logout } from "@/api/auth";
 import { getProfile } from "@/api/member";
 // findById, tokenRegeneration, logout
@@ -43,7 +42,11 @@ const memberStore = {
           if (data.isSuccess === true) {
             let accessToken = data.data["accessToken"];
             let refreshToken = data.data["refreshToken"];
-            console.log("login success token created!!!! >> ", accessToken, refreshToken);
+            console.log(
+              "login success token created!!!! >> ",
+              accessToken,
+              refreshToken
+            );
             commit("SET_IS_LOGIN", true);
             commit("SET_IS_LOGIN_ERROR", false);
             commit("SET_IS_VALID_TOKEN", true);
@@ -70,7 +73,7 @@ const memberStore = {
             commit("SET_USER_INFO", data.data);
             console.log("3. getUserInfo data >> ", data);
           } else {
-            console.log("유저 정보 없음!!!!");
+            console.log("유저 정보 x");
           }
         },
         async (error) => {
@@ -84,7 +87,10 @@ const memberStore = {
       );
     },
     async tokenRegeneration({ commit, dispatch }) {
-      console.log("토큰 재발급 >> 기존 토큰 정보 : {}", localStorage.getItem("accessToken"));
+      console.log(
+        "토큰 재발급 >> 기존 토큰 정보 : {}",
+        localStorage.getItem("accessToken")
+      );
       let token = {
         accessToken: localStorage.getItem("accessToken"),
         refreshToken: localStorage.getItem("refreshToken"),
@@ -109,7 +115,7 @@ const memberStore = {
       );
     },
     async userLogout({ commit }) {
-      let token = {
+      const token = {
         accessToken: localStorage.getItem("accessToken"),
         refreshToken: localStorage.getItem("refreshToken"),
       };
@@ -117,21 +123,34 @@ const memberStore = {
         token,
         ({ data }) => {
           if (data.isSuccess === true) {
-            commit("SET_IS_LOGIN", false);
-            commit("SET_USER_INFO", null);
-            commit("SET_IS_VALID_TOKEN", false);
-            localStorage.removeItem("accessToken"); //저장된 토큰 없애기
-            localStorage.removeItem("refreshToken"); //저장된 토큰 없애기
+            handleLogout(commit);
           } else {
-            console.log("유저 정보 없음!!!!");
+            console.log("유저 정보 x");
           }
         },
-        (error) => {
-          console.log(error);
+        async (error) => {
+          if (
+            error.response &&
+            (error.response.status === 400 || error.response.status === 401)
+          ) {
+            handleLogout(commit);
+          }
         }
       );
     },
   },
 };
+
+function handleLogout(commit) {
+  commit("SET_IS_LOGIN", false);
+  commit("SET_USER_INFO", null);
+  commit("SET_IS_VALID_TOKEN", false);
+  removeTokensFromLocalStorage();
+}
+
+function removeTokensFromLocalStorage() {
+  localStorage.removeItem("accessToken");
+  localStorage.removeItem("refreshToken");
+}
 
 export default memberStore;
