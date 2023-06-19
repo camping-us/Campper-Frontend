@@ -28,8 +28,7 @@ export default {
           this.initMap();
           this.loadMarker();
         });
-      script.src =
-        "http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=16cd299925f3e1a7ff0b522249306cfd&autoload=false";
+      script.src = process.env.VUE_APP_API_KAKAO_URL;
       document.head.appendChild(script);
     }
   },
