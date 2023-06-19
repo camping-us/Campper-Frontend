@@ -33,7 +33,10 @@ export default {
               this.datas[i].lineIntro +
               "\n평점: " +
               this.retNum(this.datas[i].total / this.datas[i].voteCnt),
-            latlng: new kakao.maps.LatLng(this.datas[i].mapY, this.datas[i].mapX),
+            latlng: new kakao.maps.LatLng(
+              this.datas[i].mapY,
+              this.datas[i].mapX
+            ),
           };
           this.positions.push(position);
         }
@@ -52,8 +55,7 @@ export default {
       const script = document.createElement("script");
 
       script.onload = () => kakao.maps.load(this.initMap);
-      script.src =
-        "http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=16cd299925f3e1a7ff0b522249306cfd&libraries=clusterer";
+      script.src = process.env.VUE_APP_API_KAKAO_URL;
       document.head.appendChild(script);
     }
   },
@@ -70,7 +72,7 @@ export default {
     },
     loadMarker() {
       var markerImage = new kakao.maps.MarkerImage(
-        "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Animals/Deciduous%20Tree.png",
+        process.env.VUE_APP_API_KAKAO_MAP_MARKER,
         new kakao.maps.Size(38, 38)
       );
       this.markers = [];
@@ -92,7 +94,6 @@ export default {
     },
     markerClick(id) {
       return function () {
-        console.log(">>>>>>>>>>>>>>>>>>>" + id);
         router.push({ name: "campInfo", params: { campno: id } });
       };
     },
