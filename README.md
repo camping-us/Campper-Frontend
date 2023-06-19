@@ -26,11 +26,9 @@
 ## 🏢 UsecaseDiagram
 
 <br>
-
-<p align="center">  
-  <img src="assets/usecase.png">
-</p>
-
+<div align="center"> 
+  <img width="948" alt="usecase" src="https://github.com/camping-us/Campper-Frontend/assets/62806067/f90de978-bc58-41b6-a9f5-ac9bc3be0a7d">
+</div>
 <br/>
 
 ## ⚙️ Skills
