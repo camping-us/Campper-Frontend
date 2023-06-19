@@ -72,7 +72,7 @@ export default {
     },
     loadMarker() {
       var markerImage = new kakao.maps.MarkerImage(
-        "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Animals/Deciduous%20Tree.png",
+        process.env.VUE_APP_API_KAKAO_MAP_MARKER,
         new kakao.maps.Size(38, 38)
       );
       this.markers = [];
@@ -94,7 +94,6 @@ export default {
     },
     markerClick(id) {
       return function () {
-        console.log(">>>>>>>>>>>>>>>>>>>" + id);
         router.push({ name: "campInfo", params: { campno: id } });
       };
     },

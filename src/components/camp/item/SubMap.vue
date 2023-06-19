@@ -45,7 +45,7 @@ export default {
     loadMarker() {
       console.log(this.mapY, this.mapX);
       var markerImage = new kakao.maps.MarkerImage(
-        "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Hand%20gestures/Backhand%20Index%20Pointing%20Down%20Light%20Skin%20Tone.png",
+        process.env.VUE_APP_API_KAKAO_SUBMAP_MARKER,
         new kakao.maps.Size(60, 60)
       );
       let loc = new kakao.maps.LatLng(this.mapY, this.mapX);
