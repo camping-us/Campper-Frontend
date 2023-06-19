@@ -9,27 +9,20 @@
         <b-col sm="6">
           <div id="subHead">📌캠핑장_상세정보</div>
           <div v-if="info">
-            <detail-info :info="this.info"></detail-info>
+            <detail-info :info="this.info" />
           </div>
         </b-col>
         <b-col sm="6">
           <div class="box">
             <div id="subHead">📌캠핑장_지도</div>
             <div v-if="info != null">
-              <sub-map
-                :facltNm="this.info.facltNm"
-                :mapY="this.info.mapY"
-                :mapX="this.info.mapX"
-              ></sub-map>
+              <sub-map :info="this.info" />
             </div>
           </div>
           <div class="box">
             <div id="subHead">📌투표_결과</div>
             <div v-if="vote != null">
-              <detail-vote-info
-                @open="openVote"
-                :vote="this.vote"
-              ></detail-vote-info>
+              <detail-vote-info @open="openVote" :vote="this.vote" />
             </div>
           </div>
         </b-col>
