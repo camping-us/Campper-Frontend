@@ -11,8 +11,17 @@ function viewCamp(campno, success, fail) {
 }
 
 function registDib(campno, success, fail) {
-  api.defaults.headers.common["Authorization"] = `Bearer ${localStorage.getItem("accessToken")}`;
+  api.defaults.headers.common["Authorization"] = `Bearer ${localStorage.getItem(
+    "accessToken"
+  )}`;
   api.post(`/camp-dibs/${campno}`).then(success).catch(fail);
 }
 
-export { listCamp, viewCamp, registDib };
+function checkDib(campno, success, fail) {
+  api.defaults.headers.common["Authorization"] = `Bearer ${localStorage.getItem(
+    "accessToken"
+  )}`;
+  api.get(`/camp-dibs/${campno}`).then(success).catch(fail);
+}
+
+export { listCamp, viewCamp, registDib, checkDib };

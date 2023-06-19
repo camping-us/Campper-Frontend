@@ -26,44 +26,66 @@
     </li>
     <li>캠핑장_찜한_사람수: {{ this.info.dibCnt }}</li>
     <button id="dibBtn" @click="clickDib()">
-      나도_찜하기:
-      <img
-        src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Red%20Heart.png"
-        width="25"
-        height="25"
-      />
+      <div v-if="!isDib">
+        나도_찜하기:
+        <img
+          id="btn_img"
+          src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Red%20Heart.png"
+        />
+      </div>
+      <div v-if="isDib">
+        찜_취소하기:
+        <img
+          id="btn_img"
+          src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Broken%20Heart.png"
+        />
+      </div>
     </button>
   </div>
 </template>
 
 <script>
-import { registDib } from "@/api/camp.js";
+import { registDib, checkDib } from "@/api/camp.js";
+
 export default {
   name: "DetailInfo",
   components: {},
   props: {
     info: Object,
-    modalIsOpen: Boolean,
   },
   data() {
     return {
-      defaultImg:
-        "https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Camping.png",
+      isDib: false,
+      defaultImg: process.env.VUE_APP_CAMP_DETAIL_IMG,
     };
   },
-  methods: {
-    clickDib() {
-      this.$checkLogin();
-      registDib(
+  mounted() {
+    if (localStorage.getItem("accessToken") != null) {
+      checkDib(
         this.$route.params.campno,
         ({ data }) => {
-          this.$printSaveStatus(data.isSuccess);
-          this.$router.go(this.$route.currentRoute);
+          this.isDib = data.data;
         },
         (error) => {
           console.log(error);
         }
       );
+    }
+  },
+  methods: {
+    clickDib() {
+      if (this.$checkLogin()) {
+        registDib(
+          this.$route.params.campno,
+          ({ data }) => {
+            this.$printSaveStatus(data.isSuccess);
+            this.$router.go(this.$route.currentRoute);
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+      }
     },
   },
 };
@@ -88,5 +110,9 @@ li {
 #dibBtn {
   border-radius: 3px;
   margin-top: 30px;
+}
+#btn_img {
+  width: 25px;
+  height: 25px;
 }
 </style>
