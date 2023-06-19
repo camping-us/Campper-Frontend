@@ -7,6 +7,7 @@
 
 <script>
 import TheHeaderNavbar from "@/components/TheHeaderNavbar";
+import "@/assets/font.css";
 
 export default {
   name: "App",
@@ -17,20 +18,6 @@ export default {
 </script>
 
 <style>
-@font-face {
-  font-family: "bitbit";
-  src: url("//cdn.df.nexon.com/img/common/font/DNFBitBit-Regular.woff"),
-    url("//cdn.df.nexon.com/img/common/font/DNFBitBit-Regular.woff2");
-}
-
-@font-face {
-  font-family: "DungGeunMo";
-  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/DungGeunMo.woff")
-    format("woff");
-  font-weight: normal;
-  font-style: normal;
-}
-
 #app {
   font-family: DungGeunMo, Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
