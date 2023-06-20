@@ -13,17 +13,27 @@
       {{ this.calculate(vote.facilities / vote.voteCnt) }}
     </li>
     <button id="voteBtn" @click="openVote">
-      나도_투표하기:
-      <img
-        src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Hand%20gestures/Backhand%20Index%20Pointing%20Right%20Light%20Skin%20Tone.png"
-        width="25"
-        height="25"
-      />
+      <div v-if="!isVote">
+        나도_투표하기:
+        <img
+          id="btn_img"
+          src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Hand%20gestures/Backhand%20Index%20Pointing%20Right%20Light%20Skin%20Tone.png"
+        />
+      </div>
+      <div v-if="isVote">
+        다시_투표하기:
+        <img
+          id="btn_img"
+          src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Hand%20gestures/Backhand%20Index%20Pointing%20Left%20Light%20Skin%20Tone.png"
+        />
+      </div>
     </button>
   </div>
 </template>
 
 <script>
+import { checkVote } from "@/api/vote.js";
+
 export default {
   name: "DetailVoteInfo",
   components: {},
@@ -33,7 +43,21 @@ export default {
   data() {
     return {
       isOpen: false,
+      isVote: false,
     };
+  },
+  mounted() {
+    if (localStorage.getItem("accessToken") != null) {
+      checkVote(
+        this.$route.params.campno,
+        ({ data }) => {
+          this.isVote = data.data;
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    }
   },
   methods: {
     calculate(num) {
@@ -68,5 +92,9 @@ li {
 #voteBtn {
   border-radius: 3px;
   margin-top: 30px;
+}
+#btn_img {
+  width: 25px;
+  height: 25px;
 }
 </style>
