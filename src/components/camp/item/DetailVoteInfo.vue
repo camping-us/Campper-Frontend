@@ -32,33 +32,19 @@
 </template>
 
 <script>
-import { checkVote } from "@/api/vote.js";
-
 export default {
   name: "DetailVoteInfo",
   components: {},
   props: {
     vote: Object,
+    isVote: Boolean,
   },
   data() {
     return {
       isOpen: false,
-      isVote: false,
     };
   },
-  mounted() {
-    if (localStorage.getItem("accessToken") != null) {
-      checkVote(
-        this.$route.params.campno,
-        ({ data }) => {
-          this.isVote = data.data;
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
-    }
-  },
+  mounted() {},
   methods: {
     calculate(num) {
       return isNaN(num) ? "0.0" : num.toFixed(1);
@@ -71,6 +57,9 @@ export default {
     isOpen() {
       this.$emit("open", this.isOpen);
     },
+    // isVote() {
+    //   this.$emit("vote", this.isVote);
+    // },
   },
 };
 </script>
