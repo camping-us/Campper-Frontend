@@ -9,7 +9,9 @@ export default {
       if (!checkToken || checkUserInfo === null) {
         alert("로그인이 필요한 페이지입니다..");
         router.push({ name: "login" });
+        return false;
       }
+      return true;
     }),
       (Vue.prototype.$printSaveStatus = function (isSuccess) {
         let msg = "등록 처리시 문제가 발생했습니다.";

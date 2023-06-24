@@ -8,7 +8,11 @@
     <b-row>
       <b-col></b-col>
       <b-col cols="8" style="text-align: -webkit-center">
-        <b-card class="text-center mt-3" style="max-width: 40rem" text-align="center">
+        <b-card
+          class="text-center mt-3"
+          style="max-width: 40rem"
+          text-align="center"
+        >
           <b-form class="text-left">
             <b-alert show variant="danger" v-if="isLoginError"
               >아이디 또는 비밀번호를 확인하세요.</b-alert
@@ -32,8 +36,18 @@
                 @keyup.enter="confirm"
               ></b-form-input>
             </b-form-group>
-            <b-button type="button" variant="primary" class="m-1" @click="confirm">로그인</b-button>
-            <b-button type="button" variant="success" class="m-1" @click="movePage"
+            <b-button
+              type="button"
+              variant="primary"
+              class="m-1"
+              @click="confirm"
+              >로그인</b-button
+            >
+            <b-button
+              type="button"
+              variant="success"
+              class="m-1"
+              @click="movePage"
               >회원가입</b-button
             >
           </b-form>
@@ -72,7 +86,8 @@ export default {
       if (this.isLogin) {
         await this.getUserInfo(token);
         // console.log("4. confirm() userInfo :: ", this.userInfo);
-        this.$router.push({ name: "home" });
+        // this.$router.push({ name: "home" });
+        this.$router.back();
       }
     },
     movePage() {
